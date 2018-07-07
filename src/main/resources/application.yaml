@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: lin
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      write_date s_as_timestamps: false
