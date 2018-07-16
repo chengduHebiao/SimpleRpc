@@ -10,6 +10,8 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 简单的聊天服务器的服务端
@@ -19,6 +21,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class SimpleChatServer {
 
+  private Logger logger = LoggerFactory.getLogger(SimpleChatServer.class);
   private int port;
 
   public SimpleChatServer(int port) {
@@ -29,7 +32,6 @@ public class SimpleChatServer {
 
     EventLoopGroup bossGroup = new NioEventLoopGroup();
     EventLoopGroup workerGroup = new NioEventLoopGroup();
-    System.out.println("准备运行端口：" + port);
     try {
       ServerBootstrap b = new ServerBootstrap();
       b.group(bossGroup, workerGroup)
@@ -37,7 +39,7 @@ public class SimpleChatServer {
           .childHandler(new SimpleChatServerInitializer())  //(4)
           .option(ChannelOption.SO_BACKLOG, 128)          // (5)
           .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
-      System.out.println("SimpleChatServer 启动了");
+     logger.warn("聊天室启动，端口{}",port);
       ChannelFuture f = b.bind(port).sync();
       f.channel().closeFuture().sync();
     } catch (InterruptedException e) {

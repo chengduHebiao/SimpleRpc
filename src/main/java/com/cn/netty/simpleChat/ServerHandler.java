@@ -10,6 +10,9 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.rmi.runtime.Log;
 
 /**
  * @author hebiao
@@ -17,19 +20,21 @@ import io.netty.util.concurrent.GlobalEventExecutor;
  */
 public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
+  private Logger log = LoggerFactory.getLogger(ServerHandler.class);
+
   public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+
   @Override
   public void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-
+    log.warn("收到消息：" + msg);
     Channel self = ctx.channel();
-    /*for (Channel channel : channels) {
-      if (channel != self) {
-        channel.writeAndFlush("client [" + self.remoteAddress().toString() + "] said :"  +msg);
+    for (Channel channel : channels) {
+      if (!channel.equals(self)) {
+        channel.writeAndFlush("client [" + self.remoteAddress().toString() + "] said :" + msg + "\n");
       } else {
-        channel.writeAndFlush("you said : " + msg);
+        self.writeAndFlush("you said : " + msg + "\n");
       }
-    }*/
-    channels.writeAndFlush("[client said:] " + msg);
+    }
 
   }
 
@@ -37,7 +42,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
   public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
     Channel incoming = ctx.channel();//上线
     channels.add(ctx.channel());
-    channels.writeAndFlush("[SERVER]-" + incoming.remoteAddress() + "加入\n");
+    channels.writeAndFlush("[SERVER]-" + incoming.remoteAddress() + "您已经加入聊天室！\n");
   }
 
 
@@ -51,19 +56,23 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
   @Override
   public void channelActive(ChannelHandlerContext ctx) throws Exception {
     Channel channel = ctx.channel();
-    System.out.println("client ["+channel.remoteAddress().toString()+"]"+"上线\n");
+    log.warn("client [" + channel.remoteAddress().toString() + "]" + "上线\n");
   }
 
 
   @Override
   public void channelInactive(ChannelHandlerContext ctx) throws Exception {
     Channel channel = ctx.channel();
-    System.out.println("client ["+channel.remoteAddress().toString()+"]"+"下线\n");
+    log.warn("client [" + channel.remoteAddress().toString() + "]" + "下线\n");
   }
 
 
   @Override
-  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-    super.exceptionCaught(ctx, cause);
+  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+    try {
+      super.exceptionCaught(ctx, cause);
+    } catch (Exception e) {
+
+    }
   }
 }

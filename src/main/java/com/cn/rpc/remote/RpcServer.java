@@ -66,7 +66,7 @@ public class RpcServer implements InitializingBean, ApplicationContextAware, Lif
       /**
        * 这里会一直等待，直到socket被关闭
        */
-      RpcProxyFactory.init();
+    //  RpcProxyFactory.init();
       f.channel().closeFuture().sync();
     } catch (Exception e) {
 

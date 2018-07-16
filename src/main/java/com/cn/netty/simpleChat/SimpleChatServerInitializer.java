@@ -11,6 +11,8 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,6 +23,7 @@ import io.netty.handler.codec.string.StringEncoder;
 public class SimpleChatServerInitializer extends
     ChannelInitializer<SocketChannel> {
 
+  private static final Logger logger = LoggerFactory.getLogger(SimpleChatServerInitializer.class);
   @Override
   public void initChannel(SocketChannel ch) throws Exception {
     ChannelPipeline pipeline = ch.pipeline();
@@ -30,7 +33,7 @@ public class SimpleChatServerInitializer extends
     pipeline.addLast("encoder", new StringEncoder());
     pipeline.addLast("handler", new ServerHandler());
 
-    System.out.println("SimpleChatClient:"+ch.remoteAddress() +"连接上");
+
   }
 
 }

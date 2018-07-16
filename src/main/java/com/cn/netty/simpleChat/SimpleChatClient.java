@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
  */
 public class SimpleChatClient {
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     new SimpleChatClient("localhost", 8090).run();
   }
 
@@ -30,7 +30,7 @@ public class SimpleChatClient {
     this.port = port;
   }
 
-  public void run() throws Exception {
+  public void run() {
     EventLoopGroup group = new NioEventLoopGroup();
     try {
       Bootstrap bootstrap = new Bootstrap()
