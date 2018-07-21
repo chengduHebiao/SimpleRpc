@@ -1,5 +1,5 @@
 /**
- * BBD Service Inc All Rights Reserved @2018
+ *  Inc All Rights Reserved @2018
  */
 
 package com.cn.rpc.handler;
