@@ -1,20 +1,15 @@
 /**
- * BBD Service Inc All Rights Reserved @2018
+ *  All Rights Reserved @2018
  */
 package com.cn.rpc.zookeeper;
 
-import static org.apache.zookeeper.CreateMode.EPHEMERAL;
 import static org.apache.zookeeper.CreateMode.PERSISTENT;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
-import org.apache.hadoop.yarn.webapp.hamlet.Hamlet.P;
-import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.ZooKeeper;
@@ -165,7 +160,7 @@ public class ZookeeperRegister {
           watchNode(zk);
         }
       });
-      logger.warn("zk 节点有  {0}", nodeList);
+      logger.warn("zk 节点有{}", nodeList);
       List<String> dataList = new ArrayList<>();
       for (String node : nodeList) {
         byte[] bytes = zk.getData("/" + BASE_ROOT + "/" + node, false, null);

@@ -1,5 +1,5 @@
 /**
- * BBD Service Inc All Rights Reserved @2018
+ *  All Rights Reserved @2018
  */
 
 package com.cn.rpc.zookeeper;
