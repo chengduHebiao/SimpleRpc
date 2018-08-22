@@ -8,6 +8,7 @@ import com.cn.rpc.domain.RpcRequest;
 import com.cn.rpc.domain.RpcResponse;
 import com.cn.rpc.interfaces.HelloService;
 import com.cn.rpc.remote.RpcServer;
+import com.cn.rpc.zookeeper.ZookeeperCreateFactory;
 import java.lang.reflect.Proxy;
 import java.util.UUID;
 import org.springframework.beans.factory.InitializingBean;
@@ -51,7 +52,10 @@ public class RpcProxyFactory implements InitializingBean{
           request.setMethodName(method.getName());
           request.setClazzTypes(method.getParameterTypes());
           request.setParameters(arguments);
-          RpcResponse response = new RpcRequestSender().send(request, host, port);
+
+          String provider = ZookeeperCreateFactory.getZookeeper().findService(interfaceClass.getName());
+
+          RpcResponse response = new RpcRequestSender().send(request, provider, -1);
 
           if (response == null
               || !StringUtils.equals(request.getId(), response.getRequestId())) {
@@ -68,7 +72,7 @@ public class RpcProxyFactory implements InitializingBean{
 
   public static void main(String[] args) throws Exception {
     HelloService service = RpcProxyFactory.create(HelloService.class, "127.0.0.1", 8099);
-    service.sayHello("中国人");
+    service.sayHello("--------------------->我是测试信息");
   }
 
   /**

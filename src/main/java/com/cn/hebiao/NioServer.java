@@ -26,7 +26,7 @@ public class NioServer {
   private Selector selector;
   private static int flag = 0;
 
-  private ByteBuffer recevieBuffer = ByteBuffer.allocate(2048);//用于处理接收的channel
+  private ByteBuffer receiveBuffer = ByteBuffer.allocate(2048);//用于处理接收的channel
   private ByteBuffer sendBuffer = ByteBuffer.allocate(2048);//用于处理发送的channel
 
   public NioServer(int port) throws IOException {
@@ -88,10 +88,10 @@ public class NioServer {
 
     } else if (key.isReadable()) {
       client = (SocketChannel) key.channel();
-      recevieBuffer.clear();
-      count = client.read(recevieBuffer);
+      receiveBuffer.clear();
+      count = client.read(receiveBuffer);
       if (count > 0) {
-        receiveText = new String(recevieBuffer.array(), 0, count);
+        receiveText = new String(receiveBuffer.array(), 0, count);
         System.out.println("客户端发来消息----->" + receiveText);
         client.register(selector, SelectionKey.OP_WRITE);
       }

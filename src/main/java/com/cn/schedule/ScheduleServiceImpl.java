@@ -75,7 +75,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
   @Override
   public void deleteSchedule(int scheduleId) {
-    scheduleTaskDAO.deleteById(scheduleId);
+   // scheduleTaskDAO.deleteById(scheduleId);
   }
 
   @Override

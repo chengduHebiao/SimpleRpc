@@ -1,5 +1,5 @@
 /**
- *  Inc All Rights Reserved @2018
+ * Inc All Rights Reserved @2018
  */
 
 package com.cn.rpc.remote;
@@ -12,6 +12,7 @@ import com.cn.rpc.handler.RpcEncode;
 import com.cn.rpc.handler.RpcServerHandler;
 import com.cn.rpc.handler.RpcProxyFactory;
 import com.cn.rpc.interfaces.HelloServiceImpl;
+import com.cn.rpc.zookeeper.ZookeeperCreateFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -43,7 +44,7 @@ public class RpcServer implements InitializingBean, ApplicationContextAware, Lif
   private Map<String, Object> serviceMap = new HashMap<>();
   private Integer port = 8099;
 
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
     try {
       EventLoopGroup work = new NioEventLoopGroup();
       EventLoopGroup boss = new NioEventLoopGroup();
@@ -62,11 +63,12 @@ public class RpcServer implements InitializingBean, ApplicationContextAware, Lif
       serverBootstrap = serverBootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
       serverBootstrap = serverBootstrap.option(ChannelOption.SO_BACKLOG, 128);
       ChannelFuture f = serverBootstrap.bind(port).sync();
+
       log.warn("已经启动rpc服务端");
       /**
        * 这里会一直等待，直到socket被关闭
        */
-    //  RpcProxyFactory.init();
+      //  RpcProxyFactory.init();
       f.channel().closeFuture().sync();
     } catch (Exception e) {
 
@@ -88,6 +90,7 @@ public class RpcServer implements InitializingBean, ApplicationContextAware, Lif
           if (clazz.getName().equals(interfaceName)) {
             log.warn("发布的服务{}", interfaceName);
             serviceMap.put(interfaceName, bean);
+            ZookeeperCreateFactory.getZookeeper().createNode(interfaceName,"127.0.0.1");
           }
         }
 

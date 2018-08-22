@@ -42,6 +42,9 @@ public class RpcRequestSender extends SimpleChannelInboundHandler<RpcResponse> {
   }
 
   public RpcResponse send(RpcRequest request, String host, int port) throws Exception {
+    if(port<0){
+      port = 8099;
+    }
 
     EventLoopGroup group = new NioEventLoopGroup();
     try {
