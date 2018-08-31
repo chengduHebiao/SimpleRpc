@@ -11,8 +11,10 @@ import com.cn.rpc.handler.RpcDecode;
 import com.cn.rpc.handler.RpcEncode;
 import com.cn.rpc.handler.RpcServerHandler;
 import com.cn.rpc.handler.RpcProxyFactory;
+import com.cn.rpc.interfaces.HelloService;
 import com.cn.rpc.interfaces.HelloServiceImpl;
 import com.cn.rpc.zookeeper.ZookeeperCreateFactory;
+import com.cn.schedule.HostUtils;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -27,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.Lifecycle;
@@ -40,7 +43,6 @@ import org.springframework.stereotype.Component;
 public class RpcServer implements InitializingBean, ApplicationContextAware, Lifecycle {
 
   Logger log = LoggerFactory.getLogger(RpcServer.class);
-
   private Map<String, Object> serviceMap = new HashMap<>();
   private Integer port = 8099;
 
@@ -90,7 +92,7 @@ public class RpcServer implements InitializingBean, ApplicationContextAware, Lif
           if (clazz.getName().equals(interfaceName)) {
             log.warn("发布的服务{}", interfaceName);
             serviceMap.put(interfaceName, bean);
-            ZookeeperCreateFactory.getZookeeper().createNode(interfaceName,"127.0.0.1");
+            ZookeeperCreateFactory.getZookeeper().createNode(interfaceName, HostUtils.getServerIp());
           }
         }
 

@@ -1,5 +1,5 @@
 /**
- *  All Rights Reserved @2018
+ * All Rights Reserved @2018
  */
 
 package com.cn.rpc.zookeeper;
@@ -18,14 +18,16 @@ import org.apache.zookeeper.Watcher.Event.KeeperState;
 public class ZookeeperWatcher implements Watcher {
 
   private CountDownLatch countDownLatch;
-  public ZookeeperWatcher(CountDownLatch countDownLatch){
+
+  public ZookeeperWatcher(CountDownLatch countDownLatch) {
 
     this.countDownLatch = countDownLatch;
   }
+
   @Override
   public void process(WatchedEvent watchedEvent) {
 
-    if(watchedEvent.getState() == KeeperState.SyncConnected){
+    if (watchedEvent.getState() == KeeperState.SyncConnected) {
 
       countDownLatch.countDown();
     }

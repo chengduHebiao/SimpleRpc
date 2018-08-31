@@ -4,7 +4,7 @@
 
 package com.cn.rpc.handler;
 
-import com.cn.rpc.SerialzationUtil;
+import com.cn.rpc.SerializationUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -36,7 +36,7 @@ public class RpcDecode extends ByteToMessageDecoder {
     }
     byte[] data = new byte[dataLength];
     in.readBytes(data);
-    Object object = SerialzationUtil.deserialize(data);
+    Object object = SerializationUtil.deserialize(data);
     out.add(object);
   }
 }

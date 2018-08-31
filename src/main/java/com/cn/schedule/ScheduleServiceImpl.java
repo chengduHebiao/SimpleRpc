@@ -90,7 +90,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     scheduleTaskDAO.save(scheduleTaskDO);
   }
 
-  @PostConstruct
+/*  @PostConstruct*/
   public void init() {
     startUnlockTaskThread();
     executorService = Executors.newFixedThreadPool(threadNum,

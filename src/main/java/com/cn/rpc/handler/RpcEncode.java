@@ -4,7 +4,7 @@
 
 package com.cn.rpc.handler;
 
-import com.cn.rpc.SerialzationUtil;
+import com.cn.rpc.SerializationUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -24,7 +24,7 @@ public class RpcEncode extends MessageToByteEncoder {
 
   protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
     if (generaClass.isInstance(msg)) {
-      byte[] data = SerialzationUtil.serialize(msg);
+      byte[] data = SerializationUtil.serialize(msg);
       out.writeInt(data.length);
       out.writeBytes(data);
     }

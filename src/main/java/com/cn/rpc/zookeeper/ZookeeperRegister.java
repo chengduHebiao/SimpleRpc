@@ -1,5 +1,5 @@
 /**
- *  All Rights Reserved @2018
+ * All Rights Reserved @2018
  */
 package com.cn.rpc.zookeeper;
 
@@ -68,7 +68,6 @@ public class ZookeeperRegister {
         e.printStackTrace();
       }
     }
-
     try {
       if (!exist(path + "/" + name)) {
         zooKeeper.create(path + "/" + name, name.getBytes(), Ids.OPEN_ACL_UNSAFE, PERSISTENT);
@@ -113,10 +112,6 @@ public class ZookeeperRegister {
     List<String> nodeList = null;
     try {
       nodeList = zooKeeper.getChildren("/" + BASE_ROOT + "/" + serviceName, false);
-      List<String> dataList = new ArrayList<>();
-      for (String node : nodeList) {
-        byte[] bytes = zooKeeper.getData("/" + BASE_ROOT + "/" + serviceName + "/" + node, false, null);
-      }
     } catch (KeeperException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {
