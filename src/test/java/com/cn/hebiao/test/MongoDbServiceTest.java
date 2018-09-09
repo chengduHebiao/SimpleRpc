@@ -37,7 +37,7 @@ public class MongoDbServiceTest extends BaseTest {
   @Test
   public void testSave() {
 
-    String filePath = "F:\\接口文档 - BBD Finance.pdf";
+    String filePath = "F:\\接口文档Finance.pdf";
     File f = new File(filePath);
     FileDO fileDO = new FileDO();
     fileDO.setId(String.valueOf(UUID.randomUUID()));
