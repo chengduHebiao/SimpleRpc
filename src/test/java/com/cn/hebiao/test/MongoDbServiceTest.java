@@ -1,6 +1,3 @@
-/**
- * BBD Service Inc All Rights Reserved @2018
- */
 
 package com.cn.hebiao.test;
 
@@ -107,7 +104,7 @@ public class MongoDbServiceTest extends BaseTest {
 
   @Test
   public void gridFSave() throws FileNotFoundException {
-    String filePath = "F:\\接口文档 - BBD Finance.pdf";
+    String filePath = "F:\\接口文档-Finance.pdf";
     File file = new File(filePath);
     InputStream inputStream = new FileInputStream(file);
     DB db = mongoDbFactory.getLegacyDb();
