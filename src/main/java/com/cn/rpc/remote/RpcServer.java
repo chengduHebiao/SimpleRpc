@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
  * @version $Id:RpcServer.java, v0.1 2018/5/31 22:12 hebiao Exp $$
  */
 @Component
-public class RpcServer implements InitializingBean, ApplicationContextAware, Lifecycle {
+public class RpcServer implements  ApplicationContextAware, Lifecycle {
 
   Logger log = LoggerFactory.getLogger(RpcServer.class);
   private Map<String, Object> serviceMap = new HashMap<>();
@@ -92,7 +92,7 @@ public class RpcServer implements InitializingBean, ApplicationContextAware, Lif
           if (clazz.getName().equals(interfaceName)) {
             log.warn("发布的服务{}", interfaceName);
             serviceMap.put(interfaceName, bean);
-            ZookeeperCreateFactory.getZookeeper().createNode(interfaceName, HostUtils.getServerIp());
+            //ZookeeperCreateFactory.getZookeeper().createNode(interfaceName, HostUtils.getServerIp());
           }
         }
 

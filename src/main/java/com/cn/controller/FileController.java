@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hebiao
  * @version $Id:FileController.java, v0.1 2018/8/30 17:25 hebiao Exp $$
  */
-@RestController
+
 public class FileController {
 
 

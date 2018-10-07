@@ -71,6 +71,15 @@
       <artifactId>spring-boot-starter-data-mongodb</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-messaging</artifactId>
+    </dependency>
+    <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+
+    <dependency>
       <artifactId>slf4j-log4j12</artifactId>
       <groupId>org.slf4j</groupId>
       <version>dummy</version>

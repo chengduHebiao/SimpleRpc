@@ -1,0 +1,145 @@
+.pageClass {
+  font: 12px verdana, arial, sans-serif;
+}
+
+.pageClass, li {
+/*  list-style: none;*/
+  padding: 0;
+  margin: 0;
+}
+
+.pageClass li {
+  float: left;
+}
+
+.pageClass li a {
+  display: block;
+  /* 如果是中英文混排的文字，建议用固定宽度
+  width:150px;
+  height:30px;
+  line-height:30px;
+  text-align:center;
+  */
+  padding: 8px 50px;
+  /* background:#3A4953;
+   color:#fff;*/
+  text-decoration: none;
+  border-right: 1px solid #000;
+}
+
+.pageDiv {
+  position: relative;
+  /* width: 77%; */
+  margin-left: 18%;
+  margin-top: 30px;
+}
+
+.pageClass li a:hover {
+  background: #146C9C;
+  color: #fff;
+  text-decoration: none;
+  border-right: 1px solid #000;
+}
+
+.pageClass li a.last {
+  border-right: 0; /* 去掉左侧边框 */
+}
+
+ul.pagination {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+ul.pagination li {
+  display: inline;
+}
+
+ul.pagination li a {
+  color: black;
+  float: left;
+  padding: 3px 20px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  font-size: 2px;
+}
+
+ul.pagination li .active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+ul.pagination li a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+.container {
+ /* border: 1px solid black;*/
+  width: 80%;
+  position: relative;
+  margin: auto;
+
+}
+
+.pageDiv {
+  position: relative;
+  margin-left: 51%;
+  margin-top: 45px;
+}
+
+.classhide {
+  display: none;
+}
+
+.acalss {
+  background: red;
+
+}
+
+td div {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+td input {
+  width: 300px;
+  height: 30px;
+}
+
+input.error {
+  border: 1px dotted red;
+}
+
+label.error {
+  display: block;
+  background-repeat: no-repeat;
+  padding-left: 18px;
+  color: red;
+}
+
+.errorClass {
+
+  color: red;
+  font-weight: bold;
+  position: relative;
+}
+table th{
+  height: 50px;
+}
+table tr{
+  height: 30px;
+}
+
+.loading {
+  background-color: red;
+  color: white;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 2px;
+  display: none;
+}

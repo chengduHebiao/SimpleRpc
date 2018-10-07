@@ -1,5 +1,5 @@
 server:
-  port: 8988
+  port: 8088
   servlet:
     context-path: /lin
   tomcat:
@@ -9,9 +9,9 @@ spring:
   #数据库的配置
   datasource:
     name: dev
-    url: jdbc:mysql://localhost:3306/my_test?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/zzzz?useUnicode=true&characterEncoding=utf-8
     username: root
-    password: ****
+    password: xxxx
     # 使用druid数据源
     #type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver

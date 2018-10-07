@@ -1,0 +1,46 @@
+.body{
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+}
+.main{
+    width: 100%;
+    text-align: center;
+}
+.header-box{
+    height: 60px;
+    position: relative;
+}
+.stepGroup {
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #0AE;
+}
+.stepGroup div {
+    position: relative;
+    left: 43%;
+    height: 50px;
+    line-height: 50px;
+    float: left;
+    font-size: 14px;
+    color: #0AE;
+}
+.main .bar {
+    position: absolute;
+    left:10%;
+    bottom: 0;
+    height: 8px;
+    border-radius: 0 4px 4px 0;
+    background-color: #0AE;
+    width: 80%;
+    transition: 0.5s all;
+}
+h3{
+    font-size: 2.4rem;
+    margin: 5px 0;
+    font-weight: bold;
+}
+h4{
+    font-size: 1.8rem;
+}
+._ztreeInputDiv {
+    position: absolute;
+}

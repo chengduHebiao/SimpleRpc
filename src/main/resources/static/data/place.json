@@ -1,0 +1,56 @@
+{
+    "success": true,
+    "msg": "获取烟草地区信息成功",
+    "data": {
+        "area": [{
+            "cityCode": "成都市",
+            "cityName": "四川成都烟草",
+            "provinceName": "四川"
+        }, {
+            "cityCode": "550000",
+            "cityName": "贵州贵阳烟草",
+            "provinceName": "贵州"
+        }, {
+            "cityCode": "551700",
+            "cityName": "贵州毕节烟草",
+            "provinceName": "贵州"
+        }, {
+            "cityCode": "553000",
+            "cityName": "贵州六盘水烟草",
+            "provinceName": "贵州"
+        }, {
+            "cityCode": "554300",
+            "cityName": "贵州铜仁烟草",
+            "provinceName": "贵州"
+        }, {
+            "cityCode": "556000",
+            "cityName": "贵州黔东南烟草",
+            "provinceName": "贵州"
+        }, {
+            "cityCode": "558000",
+            "cityName": "贵州黔南烟草",
+            "provinceName": "贵州"
+        }, {
+            "cityCode": "561000",
+            "cityName": "贵州安顺烟草",
+            "provinceName": "贵州"
+        }, {
+            "cityCode": "562400",
+            "cityName": "贵州黔西南烟草",
+            "provinceName": "贵州"
+        }, {
+            "cityCode": "563000",
+            "cityName": "贵州遵义烟草",
+            "provinceName": "贵州"
+        },{
+            "cityCode": "578000",
+            "cityName": "重庆",
+            "provinceName": "重庆"
+        },{
+            "cityCode": "597000",
+            "cityName": "陕西",
+            "provinceName": "陕西"
+        }],
+        "province": []
+    }
+}
