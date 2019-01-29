@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
  *
  *
  * @author hebiao
- * @version $Id:FileRepository.java, v0.1 2018/8/29 17:22 hebiao Exp $$
- */
+    * @version $Id:FileRepository.java, v0.1 2018/8/29 17:22 hebiao Exp $$
+    */
 @Repository
 public interface FileRepository extends MongoRepository<FileDO,String> {
 

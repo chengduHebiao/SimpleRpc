@@ -9,7 +9,7 @@ import io.netty.util.CharsetUtil;
 /**
  * @author hebiao
  * @version $Id:DiscardServerHandler.java, v0.1 2018/5/23 17:15 hebiao Exp $$
- */
+    */
 public class DiscardServerHandler extends ChannelInboundHandlerAdapter {
 
   @Override
@@ -20,7 +20,7 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter {
       System.out.print(byteBuf.toString(CharsetUtil.UTF_8));
       ctx.writeAndFlush(msg);
     } finally {
-     // ReferenceCountUtil.release(msg);
+      // ReferenceCountUtil.release(msg);
     }
   }
 
