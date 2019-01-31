@@ -48,15 +48,11 @@ public class HttpDecode extends ByteToMessageDecoder {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream
                 (originSource.getBytes(Charset.forName("utf8")))));
-
         String line;
-
         while ((line = bufferedReader.readLine()) != null) {
-
             if (StringUtils.isEmpty(line)) {
                 continue;
             }
-
             doSolveLine(line, request);
 
         }
@@ -65,15 +61,10 @@ public class HttpDecode extends ByteToMessageDecoder {
 
     private void doSolveLine(String line, HRequest request) throws IllegalAccessException {
         Field[] fields = HRequest.class.getDeclaredFields();
-
         if (line.contains("GET") && line.contains("HTTP")) {
-
             String method = line.substring(0, line.indexOf("/")).trim();
-
             String uri = line.substring(line.indexOf("/"), line.indexOf("HTTP")).trim();
-
             request.setUrl(uri);
-
             METHOD method1 = METHOD.valueOf(method);
             request.setMethod(method1);
             return;

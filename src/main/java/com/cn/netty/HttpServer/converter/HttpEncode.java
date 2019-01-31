@@ -22,18 +22,14 @@ public class HttpEncode extends MessageToByteEncoder {
     private static Logger logger = LoggerFactory.getLogger(HttpEncode.class);
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
-
-        logger.info("返回客户端的消息："+ CommonUtils.POINT+msg);
-
-        StringBuilder stringBuilder =new StringBuilder();
-
+    protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) {
+        logger.info("返回客户端的消息：" + CommonUtils.POINT + msg);
+        StringBuilder stringBuilder = new StringBuilder();
         HResponse response = (HResponse) msg;
-
-        stringBuilder.append(response.getVersion()+" " +response.getStatus().name() +"\r\n")
-        .append("server"+": "+response.getServer()+"\r\n")
-                .append("Date: "+ response.getDate()+"\r\n")
-                .append("ContentType: " + response.getContentType()+"\r\n")
+        stringBuilder.append(response.getVersion() + " " + response.getStatus().name() + "\r\n")
+                .append("server" + ": " + response.getServer() + "\r\n")
+                .append("Date: " + response.getDate() + "\r\n")
+                .append("ContentType: " + response.getContentType() + "\r\n")
                 .append("Connection: " + response.getConnection());
 
         byte[] bytes = stringBuilder.toString().getBytes(Charset.forName("utf8"));

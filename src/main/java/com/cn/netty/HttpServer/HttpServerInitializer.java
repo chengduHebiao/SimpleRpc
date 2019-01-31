@@ -4,15 +4,12 @@
 
 package com.cn.netty.HttpServer;
 
-import com.cn.netty.HttpServer.converter.HttpDecode;
-import com.cn.netty.HttpServer.converter.HttpEncode;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.Delimiters;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+import io.netty.handler.codec.http.HttpResponseEncoder;
 
 /**
  * @author hebiao
@@ -21,11 +18,11 @@ import io.netty.handler.codec.string.StringEncoder;
 public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
-    protected void initChannel(SocketChannel ch) throws Exception {
+    protected void initChannel(SocketChannel ch) {
         ChannelPipeline pipeline = ch.pipeline();
-       // pipeline.addLast("framer", new DelimiterBasedFrameDecoder(Integer.MAX_VALUE, Delimiters.lineDelimiter()));
-        pipeline.addLast("decode", new HttpDecode());
-        pipeline.addLast("encode", new HttpEncode());
+        pipeline.addLast("decode", new HttpRequestDecoder());
+        pipeline.addLast("encode", new HttpResponseEncoder());
+        pipeline.addLast("aggregator", new HttpObjectAggregator(1048576));
         pipeline.addLast("handler", new HttpServerHandler());
     }
 }
