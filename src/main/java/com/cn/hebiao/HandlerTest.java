@@ -1,4 +1,3 @@
-
 package com.cn.hebiao;
 
 /**
@@ -7,16 +6,16 @@ package com.cn.hebiao;
  */
 public class HandlerTest {
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    Handler handler1 = new RealHandler1();
-    Handler handler2 = new RealHandler2();
-    handler1.setHandler(handler2);
-    int[] requestId = {2, 12, 9, 7, 0,10};
+        Handler handler1 = new RealHandler1();
+        Handler handler2 = new RealHandler2();
+        handler1.setHandler(handler2);
+        int[] requestId = {2, 12, 9, 7, 0, 10};
 
-    for (int i : requestId) {
-      handler1.handle(i);
+        for (int i : requestId) {
+            handler1.handle(i);
+        }
     }
-  }
 
 }

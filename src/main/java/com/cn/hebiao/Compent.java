@@ -1,4 +1,3 @@
-
 package com.cn.hebiao;
 
 /**
@@ -7,6 +6,6 @@ package com.cn.hebiao;
  */
 public interface Compent {
 
-  void hanbao();
+    void hanbao();
 
 }

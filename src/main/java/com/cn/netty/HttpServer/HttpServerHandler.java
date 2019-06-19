@@ -60,11 +60,45 @@ import org.springframework.util.StringUtils;
  * @version $Id:HttpServerHandler.java, v0.1 2019/1/29 16:19 hebiao Exp $$
  */
 public class HttpServerHandler extends ChannelInboundHandlerAdapter {
+
     public static final String HTTP_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss zzz";
     public static final String HTTP_DATE_GMT_TIMEZONE = "GMT";
     public static final int HTTP_CACHE_SECONDS = 60;
 
     private static Logger logger = LoggerFactory.getLogger(HttpServerHandler.class);
+
+    /**
+     * Sets the Date and Cache headers for the HTTP Response
+     *
+     * @param response HTTP response
+     * @param fileToCache file to extract content type
+     */
+    private static void setDateAndCacheHeaders(HttpResponse response, File fileToCache) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(HTTP_DATE_FORMAT, Locale.US);
+        dateFormatter.setTimeZone(TimeZone.getTimeZone(HTTP_DATE_GMT_TIMEZONE));
+
+        // Date header
+        Calendar time = new GregorianCalendar();
+        response.headers().set(HttpHeaderNames.DATE, dateFormatter.format(time.getTime()));
+
+        // Add cache headers
+        time.add(Calendar.SECOND, HTTP_CACHE_SECONDS);
+        response.headers().set(HttpHeaderNames.EXPIRES, dateFormatter.format(time.getTime()));
+        response.headers().set(HttpHeaderNames.CACHE_CONTROL, "private, max-age=" + HTTP_CACHE_SECONDS);
+        response.headers().set(
+                HttpHeaderNames.LAST_MODIFIED, dateFormatter.format(new Date(fileToCache.lastModified())));
+    }
+
+    /**
+     * Sets the content type header for the HTTP Response
+     *
+     * @param response HTTP response
+     * @param file file to extract content type
+     */
+    private static void setContentTypeHeader(HttpResponse response, File file) {
+        MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+        response.headers().set(HttpHeaderNames.CONTENT_TYPE, mimeTypesMap.getContentType(file.getPath()));
+    }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -121,8 +155,9 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
     private void doFilePath(FullHttpRequest request, ChannelHandlerContext channelHandlerContext)
             throws UnsupportedEncodingException {
 
-        String uri = URLDecoder.decode(request.uri(),"UTF-8");;
-        String filePath = uri.substring(uri.indexOf("=")+1, uri.length());
+        String uri = URLDecoder.decode(request.uri(), "UTF-8");
+        ;
+        String filePath = uri.substring(uri.indexOf("=") + 1, uri.length());
         if (StringUtils.isEmpty(filePath)) {
             send(channelHandlerContext, "path is null", HttpResponseStatus.BAD_REQUEST);
         }
@@ -139,16 +174,16 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 .append("<body>\r\n");
 
         if (file.isDirectory()) {
-            logger.info("开始遍历文件夹：{}",file.getAbsolutePath());
+            logger.info("开始遍历文件夹：{}", file.getAbsolutePath());
             textBuilder.append("<ul>\r\n");
             File[] childFiles = file.listFiles();
             for (File child : childFiles) {
                 String absolutePath = child.getAbsolutePath();
                 textBuilder.append("<li>").append
-                        ("<a href='").append("/?dir=/"+absolutePath).append("'>").append(absolutePath).append
+                        ("<a href='").append("/?dir=/" + absolutePath).append("'>").append(absolutePath).append
                         ("</a>")
                         .append
-                        ("</li>\r\n");
+                                ("</li>\r\n");
 
             }
             textBuilder.append("</ul>\r\n");
@@ -156,7 +191,7 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
         } else {
             if (file.canRead()) {
                 try {
-                    logger.info("打开文件:{}",file.getAbsolutePath());
+                    logger.info("打开文件:{}", file.getAbsolutePath());
                  /*   BufferedReader reader = new BufferedReader(new FileReader(file));
                     textBuilder.append("<h>");
                     while (reader.read() != -1) {
@@ -198,7 +233,8 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                             if (total < 0) { // total unknown
                                 System.err.println(future.channel() + " Transfer progress: " + progress);
                             } else {
-                                System.err.println(future.channel() + " Transfer progress: " + progress + " / " + total);
+                                System.err
+                                        .println(future.channel() + " Transfer progress: " + progress + " / " + total);
                             }
                         }
 
@@ -253,9 +289,8 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         Channel incoming = ctx.channel();//上线
-       // logger.warn("client [" + incoming.remoteAddress().toString() + "]" + "与服务端建立连接成功\n");
+        // logger.warn("client [" + incoming.remoteAddress().toString() + "]" + "与服务端建立连接成功\n");
     }
-
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
@@ -263,55 +298,15 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
         //logger.warn("client [" + incoming.remoteAddress().toString() + "]" + "下线\n");
     }
 
-
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
         super.channelActive(ctx);
     }
 
-
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
-    }
-
-
-    /**
-     * Sets the Date and Cache headers for the HTTP Response
-     *
-     * @param response
-     *            HTTP response
-     * @param fileToCache
-     *            file to extract content type
-     */
-    private static void setDateAndCacheHeaders(HttpResponse response, File fileToCache) {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(HTTP_DATE_FORMAT, Locale.US);
-        dateFormatter.setTimeZone(TimeZone.getTimeZone(HTTP_DATE_GMT_TIMEZONE));
-
-        // Date header
-        Calendar time = new GregorianCalendar();
-        response.headers().set(HttpHeaderNames.DATE, dateFormatter.format(time.getTime()));
-
-        // Add cache headers
-        time.add(Calendar.SECOND, HTTP_CACHE_SECONDS);
-        response.headers().set(HttpHeaderNames.EXPIRES, dateFormatter.format(time.getTime()));
-        response.headers().set(HttpHeaderNames.CACHE_CONTROL, "private, max-age=" + HTTP_CACHE_SECONDS);
-        response.headers().set(
-                HttpHeaderNames.LAST_MODIFIED, dateFormatter.format(new Date(fileToCache.lastModified())));
-    }
-
-    /**
-     * Sets the content type header for the HTTP Response
-     *
-     * @param response
-     *            HTTP response
-     * @param file
-     *            file to extract content type
-     */
-    private static void setContentTypeHeader(HttpResponse response, File file) {
-        MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
-        response.headers().set(HttpHeaderNames.CONTENT_TYPE, mimeTypesMap.getContentType(file.getPath()));
     }
 
 }

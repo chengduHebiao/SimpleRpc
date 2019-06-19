@@ -1,4 +1,3 @@
-
 package com.cn.netty.simpleChat;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -18,45 +17,45 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleChatServer {
 
-  private Logger logger = LoggerFactory.getLogger(SimpleChatServer.class);
-  private int port;
+    private Logger logger = LoggerFactory.getLogger(SimpleChatServer.class);
+    private int port;
 
-  public SimpleChatServer(int port) {
-    this.port = port;
-  }
-
-  public void run() {
-
-    EventLoopGroup bossGroup = new NioEventLoopGroup();
-    EventLoopGroup workerGroup = new NioEventLoopGroup();
-    try {
-      ServerBootstrap b = new ServerBootstrap();
-      b.group(bossGroup, workerGroup)
-          .channel(NioServerSocketChannel.class) // (3)
-          .childHandler(new SimpleChatServerInitializer())  //(4)
-          .option(ChannelOption.SO_BACKLOG, 128)          // (5)
-          .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
-     logger.warn("聊天室启动，端口{}",port);
-      ChannelFuture f = b.bind(port).sync();
-      f.channel().closeFuture().sync();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    } finally {
-      workerGroup.shutdownGracefully();
-      bossGroup.shutdownGracefully();
+    public SimpleChatServer(int port) {
+        this.port = port;
     }
-  }
 
-  public static void main(String[] args) {
-    int port;
-    if (args.length > 0) {
-      port = Integer.parseInt(args[0]);
-    } else {
-      port = 8090;
+    public static void main(String[] args) {
+        int port;
+        if (args.length > 0) {
+            port = Integer.parseInt(args[0]);
+        } else {
+            port = 8090;
+        }
+        SimpleChatServer server = new SimpleChatServer(port);
+        server.run();
     }
-    SimpleChatServer server = new SimpleChatServer(port);
-    server.run();
-  }
+
+    public void run() {
+
+        EventLoopGroup bossGroup = new NioEventLoopGroup();
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        try {
+            ServerBootstrap b = new ServerBootstrap();
+            b.group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class) // (3)
+                    .childHandler(new SimpleChatServerInitializer())  //(4)
+                    .option(ChannelOption.SO_BACKLOG, 128)          // (5)
+                    .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
+            logger.warn("聊天室启动，端口{}", port);
+            ChannelFuture f = b.bind(port).sync();
+            f.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            workerGroup.shutdownGracefully();
+            bossGroup.shutdownGracefully();
+        }
+    }
 
 
 }

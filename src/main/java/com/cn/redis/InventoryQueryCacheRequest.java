@@ -42,7 +42,6 @@ public class InventoryQueryCacheRequest implements Request {
 
     public Integer getProductId() {
 
-
         return productId;
 
     }

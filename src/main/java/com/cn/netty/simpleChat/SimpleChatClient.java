@@ -1,4 +1,3 @@
-
 package com.cn.netty.simpleChat;
 
 import io.netty.bootstrap.Bootstrap;
@@ -15,35 +14,34 @@ import java.io.InputStreamReader;
  */
 public class SimpleChatClient {
 
-  public static void main(String[] args) {
-    new SimpleChatClient("localhost", 8090).run();
-  }
-
-  private final String host;
-  private final int port;
-
-  public SimpleChatClient(String host, int port) {
-    this.host = host;
-    this.port = port;
-  }
-
-  public void run() {
-    EventLoopGroup group = new NioEventLoopGroup();
-    try {
-      Bootstrap bootstrap = new Bootstrap()
-          .group(group)
-          .channel(NioSocketChannel.class)
-          .handler(new SimpleChatClientInitializer());
-      Channel channel = bootstrap.connect(host, port).sync().channel();
-      BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-      while (true) {
-        channel.writeAndFlush(in.readLine() + "\r\n");
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      group.shutdownGracefully();
+    private final String host;
+    private final int port;
+    public SimpleChatClient(String host, int port) {
+        this.host = host;
+        this.port = port;
     }
 
-  }
+    public static void main(String[] args) {
+        new SimpleChatClient("localhost", 8090).run();
+    }
+
+    public void run() {
+        EventLoopGroup group = new NioEventLoopGroup();
+        try {
+            Bootstrap bootstrap = new Bootstrap()
+                    .group(group)
+                    .channel(NioSocketChannel.class)
+                    .handler(new SimpleChatClientInitializer());
+            Channel channel = bootstrap.connect(host, port).sync().channel();
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            while (true) {
+                channel.writeAndFlush(in.readLine() + "\r\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            group.shutdownGracefully();
+        }
+
+    }
 }

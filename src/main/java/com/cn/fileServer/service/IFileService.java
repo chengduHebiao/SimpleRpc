@@ -1,4 +1,3 @@
-
 package com.cn.fileServer.service;
 
 import com.cn.fileServer.FileDO;
@@ -11,27 +10,26 @@ import org.bson.types.ObjectId;
  */
 public interface IFileService {
 
-  /**
-   * 保存文件
-   */
-  FileDO saveFile(FileDO file);
+    /**
+     * 保存文件
+     */
+    FileDO saveFile(FileDO file);
 
-  /**
-   * 删除文件
-   */
-  void removeFile(String id);
+    /**
+     * 删除文件
+     */
+    void removeFile(String id);
 
-  /**
-   * 根据id获取文件
-   */
-  FileDO getFileById(String id);
+    /**
+     * 根据id获取文件
+     */
+    FileDO getFileById(String id);
 
-  /**
-   * 分页查询，按上传时间降序
-   */
-  List<FileDO> listFilesByPage(int pageIndex, int pageSize);
+    /**
+     * 分页查询，按上传时间降序
+     */
+    List<FileDO> listFilesByPage(int pageIndex, int pageSize);
 
 
-
-  ObjectId save(String filePath);
+    ObjectId save(String filePath);
 }

@@ -43,19 +43,12 @@ public class RequestProcessorThread implements Callable<Boolean> {
                 Boolean flag = flagMap.get(request.getProductId());
 
                 /**
-
                  * 标志位为空，有三种情况
-
                  * 1、没有过更新请求
-
                  * 2、没有查询请求
-
                  * 3、数据库中根本没有数据
-
                  * 在最初情况，一旦库存了插入了数据，那就好会在缓存中也会放一份数据，
-
                  * 但这种情况下有可能由于redis中内存满了，redis通过LRU算法把这个商品给清除了，导致缓存中没有数据
-
                  * 所以当标志位为空的时候，需要从数据库重查询一次，并且把标志位置为false，以便后面的请求能够从缓存中取
 
                  */
@@ -64,9 +57,7 @@ public class RequestProcessorThread implements Callable<Boolean> {
                 }
 
 /**
-
  * 如果不为空，并且flag为true，说明之前有一次更新请求，说明缓存中没有数据了（更新缓存会先删除缓存），
-
  * 这个时候就要去刷新缓存，即从数据库中查询一次，并把标志位设置为false
 
  */
@@ -78,7 +69,6 @@ public class RequestProcessorThread implements Callable<Boolean> {
                 }
 
 /**
-
  * 这种情况说明之前有一个查询请求，并且把数据刷新到了缓存中，所以这时候就不用去刷新缓存了，直接返回就可以了
 
  */

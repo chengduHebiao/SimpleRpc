@@ -27,20 +27,35 @@ import org.apache.zookeeper.data.Stat;
  */
 public class ZookeeperLock implements Watcher {
 
-    public static String host = "127.0.0.1:2181";
     //缓存时间
     private static final int TIME_OUT = 200000;
-
+    public static String host = "127.0.0.1:2181";
     private static String FATHER_PATH = "/disLocks1";
-
-    private ZooKeeper zk;
-
-    private int threadId;
-
     protected CountDownLatch countDownLatch = new CountDownLatch(1);
+    private ZooKeeper zk;
+    private int threadId;
 
     public ZookeeperLock(int threadId) {
         this.threadId = threadId;
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            final int threadId = i + 1;
+            new Thread(() -> {
+                try {
+                    ZookeeperLock dis = new ZookeeperLock(threadId);
+                    dis.getZkClient(host, TIME_OUT);
+                    if (dis.getLock()) {
+                        Thread.sleep(200);
+                        dis.unlock();
+                    }
+                } catch (Exception e) {
+                    System.out.println("【第" + threadId + "个线程】 抛出的异常：");
+                    e.printStackTrace();
+                }
+            }).start();
+        }
     }
 
     //获取zk连接
@@ -158,27 +173,7 @@ public class ZookeeperLock implements Watcher {
         }
     }
 
-
     public ZooKeeper getZooKeeper() {
         return zk;
-    }
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            final int threadId = i + 1;
-            new Thread(() -> {
-                try {
-                    ZookeeperLock dis = new ZookeeperLock(threadId);
-                    dis.getZkClient(host, TIME_OUT);
-                    if (dis.getLock()) {
-                        Thread.sleep(200);
-                        dis.unlock();
-                    }
-                } catch (Exception e) {
-                    System.out.println("【第" + threadId + "个线程】 抛出的异常：");
-                    e.printStackTrace();
-                }
-            }).start();
-        }
     }
 }

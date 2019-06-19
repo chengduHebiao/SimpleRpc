@@ -29,34 +29,33 @@ public class ReverseString {
         return sb.toString();
     }
 
-    public static String getBackStringLength(String originString){
+    public static String getBackStringLength(String originString) {
 
         Integer maxLength = 0;
 
-        String maxLengthStr ="";
+        String maxLengthStr = "";
         //首先获取所有的子串
 
-
-        for(int i=0;i<originString.length()-1;i++){
-            for(int j=i+1;j<=originString.length();j++){
-                String subString = originString.substring(i,j);
+        for (int i = 0; i < originString.length() - 1; i++) {
+            for (int j = i + 1; j <= originString.length(); j++) {
+                String subString = originString.substring(i, j);
                 Integer length = getLength(subString);
 
-                if(length>maxLength){
+                if (length > maxLength) {
                     maxLength = length;
                     maxLengthStr = subString;
                 }
             }
         }
 
-        return  maxLengthStr;
+        return maxLengthStr;
 
     }
 
     private static Integer getLength(String subString) {
 
-        String backString =new StringBuffer(subString).reverse().toString();
-        if(backString.equals(subString)){
+        String backString = new StringBuffer(subString).reverse().toString();
+        if (backString.equals(subString)) {
             return subString.length();
         }
 
@@ -66,6 +65,6 @@ public class ReverseString {
     public static void main(String[] args) {
         String originString = "bcbassdolk";
 
-        System.out.println("最长回文子串为："+ new StringBuffer(originString).reverse().toString());
+        System.out.println("最长回文子串为：" + new StringBuffer(originString).reverse().toString());
     }
 }

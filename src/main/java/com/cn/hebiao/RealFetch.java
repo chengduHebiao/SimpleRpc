@@ -1,4 +1,3 @@
-
 package com.cn.hebiao;
 
 import java.util.HashMap;
@@ -15,15 +14,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class RealFetch extends TobaccoDataFetch<String> {
 
-  private Logger logger = LoggerFactory.getLogger(RealFetch.class);
+    private Logger logger = LoggerFactory.getLogger(RealFetch.class);
 
-  @Override
-  String convert(Map<String, String> object) {
-    return "HEBIAO";
-  }
+    @Override
+    String convert(Map<String, String> object) {
+        return "HEBIAO";
+    }
 
-  @PostConstruct
-  public void init() {
-    logger.warn(this.fetch(new HashMap<>()));
-  }
+    @PostConstruct
+    public void init() {
+        logger.warn(this.fetch(new HashMap<>()));
+    }
 }

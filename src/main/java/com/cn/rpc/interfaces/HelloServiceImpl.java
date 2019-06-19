@@ -1,5 +1,5 @@
 /**
- *  Inc All Rights Reserved @2018
+ * Inc All Rights Reserved @2018
  */
 
 package com.cn.rpc.interfaces;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HelloServiceImpl implements HelloService {
 
-  public String sayHello(String message) {
-    return "hello" + message;
-  }
+    public String sayHello(String message) {
+        return "hello" + message;
+    }
 }

@@ -1,4 +1,3 @@
-
 package com.cn.hebiao;
 
 /**
@@ -9,15 +8,15 @@ package com.cn.hebiao;
  */
 public class Decorator implements Compent {
 
-  private Compent compent;
+    private Compent compent;
 
-  public Decorator(Compent compent) {
-    this.compent = compent;
-  }
+    public Decorator(Compent compent) {
+        this.compent = compent;
+    }
 
-  @Override
-  public void hanbao() {
+    @Override
+    public void hanbao() {
 
-    compent.hanbao();
-  }
+        compent.hanbao();
+    }
 }

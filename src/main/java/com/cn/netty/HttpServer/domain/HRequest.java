@@ -65,6 +65,10 @@ public class HRequest implements Serializable {
 
     @IdentityAnnotation(value = "Connection")
     private String connection;
+    /**
+     * 请求参数
+     */
+    private Map<String, Object> body;
 
     public String getCacheControl() {
         return cacheControl;
@@ -105,12 +109,6 @@ public class HRequest implements Serializable {
     public void setConnection(String connection) {
         this.connection = connection;
     }
-
-    /**
-     * 请求参数
-     */
-    private Map<String, Object> body;
-
 
     public String getUrl() {
         return url;
@@ -160,6 +158,23 @@ public class HRequest implements Serializable {
         this.body = body;
     }
 
+    @Override
+    public String toString() {
+        return "HRequest{" +
+                "url='" + url + '\'' +
+                ", method=" + method +
+                ", userAgent='" + userAgent + '\'' +
+                ", host='" + host + '\'' +
+                ", cookie='" + cookie + '\'' +
+                ", cacheControl='" + cacheControl + '\'' +
+                ", accept='" + accept + '\'' +
+                ", acceptEncoding='" + acceptEncoding + '\'' +
+                ", acceptLanguage='" + acceptLanguage + '\'' +
+                ", connection='" + connection + '\'' +
+                ", body=" + body +
+                '}';
+    }
+
     /**
      * http请求类型定义枚举
      */
@@ -179,22 +194,5 @@ public class HRequest implements Serializable {
             this.result = result;
         }
 
-    }
-
-    @Override
-    public String toString() {
-        return "HRequest{" +
-                "url='" + url + '\'' +
-                ", method=" + method +
-                ", userAgent='" + userAgent + '\'' +
-                ", host='" + host + '\'' +
-                ", cookie='" + cookie + '\'' +
-                ", cacheControl='" + cacheControl + '\'' +
-                ", accept='" + accept + '\'' +
-                ", acceptEncoding='" + acceptEncoding + '\'' +
-                ", acceptLanguage='" + acceptLanguage + '\'' +
-                ", connection='" + connection + '\'' +
-                ", body=" + body +
-                '}';
     }
 }

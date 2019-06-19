@@ -1,5 +1,5 @@
 /**
- *  All Rights Reserved @2018
+ * All Rights Reserved @2018
  */
 
 package com.cn.rpc.zookeeper;
@@ -10,24 +10,24 @@ package com.cn.rpc.zookeeper;
  */
 public class ZookeeperCreateFactory {
 
-  public static ZookeeperRegister zookeeperRegister = null;
+    public static ZookeeperRegister zookeeperRegister = null;
 
-  public static ZookeeperRegister createZookeeper() {
-    synchronized (ZookeeperCreateFactory.class) {
-      if (zookeeperRegister == null) {
-        zookeeperRegister = new ZookeeperRegister();
-      }
+    public static ZookeeperRegister createZookeeper() {
+        synchronized (ZookeeperCreateFactory.class) {
+            if (zookeeperRegister == null) {
+                zookeeperRegister = new ZookeeperRegister();
+            }
+        }
+
+        return zookeeperRegister;
     }
 
-    return zookeeperRegister;
-  }
+    public static ZookeeperRegister getZookeeper() {
 
-  public static ZookeeperRegister getZookeeper() {
-
-    if (zookeeperRegister == null) {
-      createZookeeper();
+        if (zookeeperRegister == null) {
+            createZookeeper();
+        }
+        return zookeeperRegister;
     }
-    return zookeeperRegister;
-  }
 
 }

@@ -36,6 +36,22 @@ public class RequestProcessorThreadPool {
 
     }
 
+    public static RequestProcessorThreadPool getInstance() {
+
+        return Singleton.getInstance();
+
+    }
+
+    /**
+     * 初始化线程池
+     */
+
+    public static void init() {
+
+        getInstance();
+
+    }
+
     public static class Singleton {
 
         private static RequestProcessorThreadPool instance;
@@ -51,22 +67,6 @@ public class RequestProcessorThreadPool {
             return instance;
 
         }
-
-    }
-
-    public static RequestProcessorThreadPool getInstance() {
-
-        return Singleton.getInstance();
-
-    }
-
-    /**
-     * 初始化线程池
-     */
-
-    public static void init() {
-
-        getInstance();
 
     }
 }

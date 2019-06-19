@@ -25,6 +25,36 @@ public class RequestQueue {
 
     }
 
+    public static RequestQueue getInstance() {
+
+        return Singleton.getInstance();
+
+    }
+
+    public void addQueue(ArrayBlockingQueue<Request> queue) {
+
+        queues.add(queue);
+
+    }
+
+    public int getQueueSize() {
+
+        return queues.size();
+
+    }
+
+    public ArrayBlockingQueue<Request> getQueueByIndex(int index) {
+
+        return queues.get(index);
+
+    }
+
+    public Map<Integer, Boolean> getFlagMap() {
+
+        return this.flagMap;
+
+    }
+
     private static class Singleton {
 
         private static RequestQueue queue;
@@ -40,37 +70,5 @@ public class RequestQueue {
             return queue;
 
         }
-    }
-
-    public static RequestQueue getInstance(){
-
-        return Singleton.getInstance();
-
-    }
-
-    public void addQueue(ArrayBlockingQueue<Request> queue) {
-
-        queues.add(queue);
-
-    }
-
-
-    public int getQueueSize(){
-
-        return queues.size();
-
-    }
-
-    public ArrayBlockingQueue<Request> getQueueByIndex(int index) {
-
-        return queues.get(index);
-
-    }
-
-
-    public Map<Integer,Boolean> getFlagMap() {
-
-        return this.flagMap;
-
     }
 }

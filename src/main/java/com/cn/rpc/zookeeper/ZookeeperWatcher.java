@@ -10,27 +10,25 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
 
 /**
- *
- *
  * @author hebiao
- * @version $Id:ZookeeperWatcher.java, v0.1 2018/8/22 16:59 hebiao Exp $$ 
+ * @version $Id:ZookeeperWatcher.java, v0.1 2018/8/22 16:59 hebiao Exp $$
  */
 public class ZookeeperWatcher implements Watcher {
 
-  private CountDownLatch countDownLatch;
+    private CountDownLatch countDownLatch;
 
-  public ZookeeperWatcher(CountDownLatch countDownLatch) {
+    public ZookeeperWatcher(CountDownLatch countDownLatch) {
 
-    this.countDownLatch = countDownLatch;
-  }
-
-  @Override
-  public void process(WatchedEvent watchedEvent) {
-
-    if (watchedEvent.getState() == KeeperState.SyncConnected) {
-
-      countDownLatch.countDown();
+        this.countDownLatch = countDownLatch;
     }
 
-  }
+    @Override
+    public void process(WatchedEvent watchedEvent) {
+
+        if (watchedEvent.getState() == KeeperState.SyncConnected) {
+
+            countDownLatch.countDown();
+        }
+
+    }
 }

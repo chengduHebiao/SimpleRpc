@@ -5,10 +5,8 @@
 package com.cn.redis;
 
 /**
- *
- *
  * @author hebiao
- * @version $Id:SysConfigUtil.java, v0.1 2018/11/12 14:21 hebiao Exp $$ 
+ * @version $Id:SysConfigUtil.java, v0.1 2018/11/12 14:21 hebiao Exp $$
  */
 public class SysConfigUtil {
 

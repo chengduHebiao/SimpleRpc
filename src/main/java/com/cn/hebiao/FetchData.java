@@ -1,4 +1,3 @@
-
 package com.cn.hebiao;
 
 /**
@@ -7,5 +6,5 @@ package com.cn.hebiao;
  */
 public interface FetchData<R, T> {
 
-  R fetch(T t);
+    R fetch(T t);
 }

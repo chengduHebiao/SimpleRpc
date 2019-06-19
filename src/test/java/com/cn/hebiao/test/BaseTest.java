@@ -1,4 +1,3 @@
-
 package com.cn.hebiao.test;
 
 import org.junit.After;
@@ -17,15 +16,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class BaseTest {
 
-  private static final Logger LOG = LoggerFactory.getLogger(BaseTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BaseTest.class);
 
-  @Before
-  public void init() {
-    LOG.info("测试开始--------");
-  }
+    @Before
+    public void init() {
+        LOG.info("测试开始--------");
+    }
 
-  @After
-  public void after() {
-    LOG.info("测试结束---------");
-  }
+    @After
+    public void after() {
+        LOG.info("测试结束---------");
+    }
 }

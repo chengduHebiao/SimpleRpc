@@ -1,5 +1,3 @@
-
-
 package com.cn.hebiao;
 
 import java.util.ArrayList;
@@ -14,50 +12,49 @@ import org.springframework.util.StringUtils;
  */
 public abstract class AbstractSubject implements Isubject {
 
-  protected String topic;
+    /**
+     * 多个主题的观察者集合
+     */
+    protected static Map<String, List<Iobervser>> topicIobervers = new ConcurrentHashMap<>();
+    protected String topic;
 
-  public AbstractSubject(String topic) {
-    this.topic = topic;
-  }
-
-  /**
-   * 多个主题的观察者集合
-   */
-  protected static Map<String, List<Iobervser>> topicIobervers = new ConcurrentHashMap<>();
-
-  @Override
-  public void subscribe(Iobervser iobervser) {
-    if (iobervser == null) {
-      return;
-    }
-    if (!StringUtils.isEmpty(topic)) {
-      List<Iobervser> exits = topicIobervers.get(topic);
-      if (exits == null || exits.isEmpty()) {
-        exits = new ArrayList<>();
-      }
-      exits.add(iobervser);
-      topicIobervers.put(topic, exits);
+    public AbstractSubject(String topic) {
+        this.topic = topic;
     }
 
-  }
+    @Override
+    public void subscribe(Iobervser iobervser) {
+        if (iobervser == null) {
+            return;
+        }
+        if (!StringUtils.isEmpty(topic)) {
+            List<Iobervser> exits = topicIobervers.get(topic);
+            if (exits == null || exits.isEmpty()) {
+                exits = new ArrayList<>();
+            }
+            exits.add(iobervser);
+            topicIobervers.put(topic, exits);
+        }
 
-  @Override
-  public void deSubscribe(Iobervser iobervser) {
-    if (iobervser == null) {
-      return;
     }
-    if (!StringUtils.isEmpty(topic)) {
-      List<Iobervser> exits = topicIobervers.get(topic);
-      if (exits == null || exits.isEmpty()) {
-        return;
-      }
-      exits.remove(iobervser);
-      topicIobervers.put(topic, exits);
-    }
-  }
 
-  /**
-   * 通知订阅对象
-   */
-  public abstract void notifyObservers(Object args);
+    @Override
+    public void deSubscribe(Iobervser iobervser) {
+        if (iobervser == null) {
+            return;
+        }
+        if (!StringUtils.isEmpty(topic)) {
+            List<Iobervser> exits = topicIobervers.get(topic);
+            if (exits == null || exits.isEmpty()) {
+                return;
+            }
+            exits.remove(iobervser);
+            topicIobervers.put(topic, exits);
+        }
+    }
+
+    /**
+     * 通知订阅对象
+     */
+    public abstract void notifyObservers(Object args);
 }

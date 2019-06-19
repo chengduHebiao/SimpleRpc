@@ -21,6 +21,12 @@ public class HttpEncode extends MessageToByteEncoder {
 
     private static Logger logger = LoggerFactory.getLogger(HttpEncode.class);
 
+    public static void main(String[] args) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("HTTP/1.1 ").append("200");
+        System.out.println(stringBuilder.toString());
+    }
+
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) {
         logger.info("返回客户端的消息：" + CommonUtils.POINT + msg);
@@ -35,11 +41,5 @@ public class HttpEncode extends MessageToByteEncoder {
         byte[] bytes = stringBuilder.toString().getBytes(Charset.forName("utf8"));
         out.writeBytes(bytes);
 
-    }
-
-    public static void main(String[] args) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("HTTP/1.1 ").append("200");
-        System.out.println(stringBuilder.toString());
     }
 }

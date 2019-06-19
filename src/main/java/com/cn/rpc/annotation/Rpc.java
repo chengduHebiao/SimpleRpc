@@ -1,5 +1,5 @@
 /**
- *  Inc All Rights Reserved @2018
+ * Inc All Rights Reserved @2018
  */
 
 package com.cn.rpc.annotation;
@@ -25,7 +25,8 @@ import java.lang.annotation.Target;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value={CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, PARAMETER, TYPE})
+@Target(value = {CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, PARAMETER, TYPE})
 public @interface Rpc {
-  String value() default "";
+
+    String value() default "";
 }

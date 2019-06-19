@@ -1,4 +1,3 @@
-
 package com.cn.netty.simpleChat;
 
 import io.netty.channel.ChannelInitializer;
@@ -15,13 +14,13 @@ import io.netty.handler.codec.string.StringEncoder;
  */
 public class SimpleChatClientInitializer extends ChannelInitializer<SocketChannel> {
 
-  @Override
-  public void initChannel(SocketChannel ch) throws Exception {
-    ChannelPipeline pipeline = ch.pipeline();
+    @Override
+    public void initChannel(SocketChannel ch) throws Exception {
+        ChannelPipeline pipeline = ch.pipeline();
 
-    pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-    pipeline.addLast("decoder", new StringDecoder());
-    pipeline.addLast("encoder", new StringEncoder());
-    pipeline.addLast("handler", new SimpleChatClientHandler());
-  }
+        pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
+        pipeline.addLast("decoder", new StringDecoder());
+        pipeline.addLast("encoder", new StringEncoder());
+        pipeline.addLast("handler", new SimpleChatClientHandler());
+    }
 }

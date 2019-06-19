@@ -1,4 +1,3 @@
-
 package com.cn.rpc.annotation;
 
 import com.cn.rpc.interfaces.HelloServiceImpl;
@@ -14,23 +13,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class RpcBeanPostProcessor implements BeanPostProcessor {
 
-  @Rpc
-  @Autowired
-  private HelloServiceImpl helloService;
+    @Rpc
+    @Autowired
+    private HelloServiceImpl helloService;
 
 
-  @Override
-  public Object postProcessBeforeInitialization(Object bean, String beanName) {
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) {
 
-    Class<?> clazz = bean.getClass();
-    Field[] fields = clazz.getFields();
-    for (Field field : fields) {
-      Rpc rpc = field.getAnnotation(Rpc.class);
-      if (rpc != null) {
-        System.out.println("rpc class-->" + bean.getClass().getName());
-      }
+        Class<?> clazz = bean.getClass();
+        Field[] fields = clazz.getFields();
+        for (Field field : fields) {
+            Rpc rpc = field.getAnnotation(Rpc.class);
+            if (rpc != null) {
+                System.out.println("rpc class-->" + bean.getClass().getName());
+            }
+        }
+        return bean;
     }
-    return bean;
-  }
 
 }

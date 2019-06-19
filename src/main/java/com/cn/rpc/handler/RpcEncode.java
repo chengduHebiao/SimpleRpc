@@ -1,5 +1,5 @@
 /**
- *  Inc All Rights Reserved @2018
+ * Inc All Rights Reserved @2018
  */
 
 package com.cn.rpc.handler;
@@ -15,18 +15,18 @@ import io.netty.handler.codec.MessageToByteEncoder;
  */
 public class RpcEncode extends MessageToByteEncoder {
 
-  private Class<?> generaClass;
+    private Class<?> generaClass;
 
-  public RpcEncode(Class<?> clazz) {
-    this.generaClass = clazz;
-  }
-
-
-  protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
-    if (generaClass.isInstance(msg)) {
-      byte[] data = SerializationUtil.serialize(msg);
-      out.writeInt(data.length);
-      out.writeBytes(data);
+    public RpcEncode(Class<?> clazz) {
+        this.generaClass = clazz;
     }
-  }
+
+
+    protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
+        if (generaClass.isInstance(msg)) {
+            byte[] data = SerializationUtil.serialize(msg);
+            out.writeInt(data.length);
+            out.writeBytes(data);
+        }
+    }
 }

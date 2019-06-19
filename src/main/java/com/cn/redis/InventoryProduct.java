@@ -5,12 +5,11 @@
 package com.cn.redis;
 
 /**
- *
- *
  * @author hebiao
- * @version $Id:InventoryProduct.java, v0.1 2018/11/12 14:08 hebiao Exp $$ 
+ * @version $Id:InventoryProduct.java, v0.1 2018/11/12 14:08 hebiao Exp $$
  */
 public class InventoryProduct {
+
     private Integer productId;
 
     private Long InventoryCnt;

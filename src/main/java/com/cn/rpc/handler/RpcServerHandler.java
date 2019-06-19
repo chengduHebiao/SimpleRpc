@@ -1,5 +1,5 @@
 /**
- *  Inc All Rights Reserved @2018
+ * Inc All Rights Reserved @2018
  */
 
 package com.cn.rpc.handler;
@@ -20,58 +20,58 @@ import org.slf4j.LoggerFactory;
  */
 public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
-  private Logger logger = LoggerFactory.getLogger(RpcServerHandler.class);
+    private Logger logger = LoggerFactory.getLogger(RpcServerHandler.class);
 
-  private Map<String, Object> serviceMap;
+    private Map<String, Object> serviceMap;
 
-  public RpcServerHandler(Map<String, Object> serviceMap) {
+    public RpcServerHandler(Map<String, Object> serviceMap) {
 
-    this.serviceMap = serviceMap;
-  }
-
-  @Override
-  public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-    super.handlerAdded(ctx);
-  }
-
-  @Override
-  protected void channelRead0(ChannelHandlerContext ctx, RpcRequest msg) throws Exception {
-    RpcResponse response = new RpcResponse();
-    try {
-      response = handle(msg);
-    } catch (Exception e) {
-      response.setError(e);
+        this.serviceMap = serviceMap;
     }
 
-    ctx.writeAndFlush(response);
-
-
-  }
-
-  @Override
-  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-    super.exceptionCaught(ctx, cause);
-    ctx.close();
-  }
-
-  private RpcResponse handle(RpcRequest request) throws Exception {
-    RpcResponse response = new RpcResponse();
-    response.setRequestId(request.getId());
-    Object clazz = serviceMap.get(request.getInterfaceName());
-    if (clazz == null) {
-      throw new Exception("cant get request class");
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        super.handlerAdded(ctx);
     }
-    try {
-      Method method = clazz.getClass().getDeclaredMethod(request.getMethodName(), request.getClazzTypes());
-      Object result = method.invoke(clazz, request.getParameters());
-      response.setResult(result);
-    } catch (NoSuchMethodException e) {
-      logger.error("error", e);
-    } catch (IllegalAccessException e) {
-      logger.error("error", e);
-    } catch (InvocationTargetException e) {
-      logger.error("error", e);
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, RpcRequest msg) throws Exception {
+        RpcResponse response = new RpcResponse();
+        try {
+            response = handle(msg);
+        } catch (Exception e) {
+            response.setError(e);
+        }
+
+        ctx.writeAndFlush(response);
+
+
     }
-    return response;
-  }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        super.exceptionCaught(ctx, cause);
+        ctx.close();
+    }
+
+    private RpcResponse handle(RpcRequest request) throws Exception {
+        RpcResponse response = new RpcResponse();
+        response.setRequestId(request.getId());
+        Object clazz = serviceMap.get(request.getInterfaceName());
+        if (clazz == null) {
+            throw new Exception("cant get request class");
+        }
+        try {
+            Method method = clazz.getClass().getDeclaredMethod(request.getMethodName(), request.getClazzTypes());
+            Object result = method.invoke(clazz, request.getParameters());
+            response.setResult(result);
+        } catch (NoSuchMethodException e) {
+            logger.error("error", e);
+        } catch (IllegalAccessException e) {
+            logger.error("error", e);
+        } catch (InvocationTargetException e) {
+            logger.error("error", e);
+        }
+        return response;
+    }
 }

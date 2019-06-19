@@ -47,22 +47,6 @@ public class HResponse implements Serializable {
         this.server = server;
     }
 
-    public enum CODE {
-
-        OK(200),
-        UNAUTHORIZED(401),
-        NOT_FOUND(404),
-        FORBIDDEN(403),
-        BAD_GETWAY(502);
-
-        Integer code;
-
-        CODE(Integer code) {
-            this.code = code;
-        }
-
-    }
-
     public String getVersion() {
         return version;
     }
@@ -113,5 +97,21 @@ public class HResponse implements Serializable {
                 ", Connection='" + Connection + '\'' +
                 ", server='" + server + '\'' +
                 '}';
+    }
+
+    public enum CODE {
+
+        OK(200),
+        UNAUTHORIZED(401),
+        NOT_FOUND(404),
+        FORBIDDEN(403),
+        BAD_GETWAY(502);
+
+        Integer code;
+
+        CODE(Integer code) {
+            this.code = code;
+        }
+
     }
 }

@@ -1,4 +1,3 @@
-
 package com.cn.netty.simpleChat;
 
 import io.netty.channel.ChannelInitializer;

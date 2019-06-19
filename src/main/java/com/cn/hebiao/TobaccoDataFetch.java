@@ -1,5 +1,5 @@
 /**
- *  Inc All Rights Reserved @2018
+ * Inc All Rights Reserved @2018
  */
 
 package com.cn.hebiao;
@@ -12,10 +12,10 @@ import java.util.Map;
  */
 public abstract class TobaccoDataFetch<R> implements FetchData<R, Map<String, String>> {
 
-  @Override
-  public R fetch(Map<String, String> stringStringMap) {
-    return convert(stringStringMap);
-  }
+    @Override
+    public R fetch(Map<String, String> stringStringMap) {
+        return convert(stringStringMap);
+    }
 
-  abstract R convert(Map<String, String> object);
+    abstract R convert(Map<String, String> object);
 }

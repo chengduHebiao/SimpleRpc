@@ -1,4 +1,3 @@
-
 package com.cn.hebiao;
 
 /**
@@ -7,12 +6,12 @@ package com.cn.hebiao;
  */
 public class RealHandler2 extends Handler {
 
-  @Override
-  public void handle(int requestId) {
-    if (requestId < 10) {
-      System.out.println("我的handler2，处理了请求" + requestId);
-    } else {
-      System.out.println("无人能处理请求" + requestId);
+    @Override
+    public void handle(int requestId) {
+        if (requestId < 10) {
+            System.out.println("我的handler2，处理了请求" + requestId);
+        } else {
+            System.out.println("无人能处理请求" + requestId);
+        }
     }
-  }
 }

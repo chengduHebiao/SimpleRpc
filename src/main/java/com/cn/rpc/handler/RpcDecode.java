@@ -1,5 +1,5 @@
 /**
- *  Inc All Rights Reserved @2018
+ * Inc All Rights Reserved @2018
  */
 
 package com.cn.rpc.handler;
@@ -16,27 +16,27 @@ import java.util.List;
  */
 public class RpcDecode extends ByteToMessageDecoder {
 
-  private Class<?> generClass;
+    private Class<?> generClass;
 
-  public RpcDecode(Class<?> generClass) {
-    this.generClass = generClass;
-  }
+    public RpcDecode(Class<?> generClass) {
+        this.generClass = generClass;
+    }
 
-  protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-    if (in.readableBytes() < 4) {
-      return;
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        if (in.readableBytes() < 4) {
+            return;
+        }
+        in.markReaderIndex();
+        int dataLength = in.readInt();
+        if (dataLength < 0) {
+            ctx.close();
+        }
+        if (in.readableBytes() < dataLength) {
+            in.resetReaderIndex();
+        }
+        byte[] data = new byte[dataLength];
+        in.readBytes(data);
+        Object object = SerializationUtil.deserialize(data);
+        out.add(object);
     }
-    in.markReaderIndex();
-    int dataLength = in.readInt();
-    if (dataLength < 0) {
-      ctx.close();
-    }
-    if (in.readableBytes() < dataLength) {
-      in.resetReaderIndex();
-    }
-    byte[] data = new byte[dataLength];
-    in.readBytes(data);
-    Object object = SerializationUtil.deserialize(data);
-    out.add(object);
-  }
 }

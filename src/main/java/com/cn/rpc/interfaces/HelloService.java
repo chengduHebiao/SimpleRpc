@@ -1,5 +1,5 @@
 /**
- *  Inc All Rights Reserved @2018
+ * Inc All Rights Reserved @2018
  */
 
 package com.cn.rpc.interfaces;
@@ -12,6 +12,6 @@ package com.cn.rpc.interfaces;
  */
 public interface HelloService {
 
-   String sayHello(String message);
+    String sayHello(String message);
 
 }

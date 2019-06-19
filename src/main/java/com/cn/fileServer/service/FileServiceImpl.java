@@ -1,4 +1,3 @@
-
 package com.cn.fileServer.service;
 
 import com.cn.fileServer.FileDO;
@@ -20,42 +19,42 @@ import org.springframework.stereotype.Service;
 @Service
 public class FileServiceImpl implements IFileService {
 
-  @Autowired
-  private FileRepository fileRepository;
-  // 获得SpringBoot提供的mongodb的GridFS对象
-  @Autowired
-  private GridFsTemplate gridFsTemplate;
+    @Autowired
+    private FileRepository fileRepository;
+    // 获得SpringBoot提供的mongodb的GridFS对象
+    @Autowired
+    private GridFsTemplate gridFsTemplate;
 
-  @Override
-  public FileDO saveFile(FileDO file) {
-    return fileRepository.save(file);
-  }
-
-  @Override
-  public void removeFile(String id) {
-    fileRepository.delete(getFileById(id));
-  }
-
-  @Override
-  public FileDO getFileById(String id) {
-    System.out.println(id);
-    return fileRepository.findById(id).get();
-  }
-
-  @Override
-  public List<FileDO> listFilesByPage(int pageIndex, int pageSize) {
-    return null;
-  }
-
-  @Override
-  public ObjectId save(String path) {
-    try {
-      File file =new File(path);
-      InputStream inputStream = new FileInputStream(file);
-      return gridFsTemplate.store(inputStream,file.getName(),"image/png");
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
+    @Override
+    public FileDO saveFile(FileDO file) {
+        return fileRepository.save(file);
     }
-    return null;
-  }
+
+    @Override
+    public void removeFile(String id) {
+        fileRepository.delete(getFileById(id));
+    }
+
+    @Override
+    public FileDO getFileById(String id) {
+        System.out.println(id);
+        return fileRepository.findById(id).get();
+    }
+
+    @Override
+    public List<FileDO> listFilesByPage(int pageIndex, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public ObjectId save(String path) {
+        try {
+            File file = new File(path);
+            InputStream inputStream = new FileInputStream(file);
+            return gridFsTemplate.store(inputStream, file.getName(), "image/png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

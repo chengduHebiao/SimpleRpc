@@ -1,5 +1,5 @@
 /**
- *  Inc All Rights Reserved @2018
+ * Inc All Rights Reserved @2018
  */
 
 package com.cn.schedule;
@@ -10,8 +10,8 @@ package com.cn.schedule;
  */
 public interface Task {
 
-  /**
-   * 任务的执行逻辑
-   */
-  void execute(String taskParameter);
+    /**
+     * 任务的执行逻辑
+     */
+    void execute(String taskParameter);
 }

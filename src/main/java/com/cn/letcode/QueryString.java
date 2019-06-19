@@ -14,38 +14,34 @@ public class QueryString {
      *
      * 你可以按任意顺序返回答案。
      *
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/find-common-characters
-     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param A
-     * @return
+     * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/find-common-characters 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      */
-    public List<String> coommonChars(String[] A){
+    public List<String> coommonChars(String[] A) {
 
         List<String> list = new ArrayList<>();
         int[] res = new int[26];
 
         char[] chars = A[0].toCharArray();
 
-        for(char c:chars){
-            res[c-'a']++;
+        for (char c : chars) {
+            res[c - 'a']++;
         }
 
-        for(int i=0;i<A.length;i++){
+        for (int i = 0; i < A.length; i++) {
             int[] temp = new int[26];
-            for(char c:A[i].toCharArray()){
-                temp[c-'a']++;
+            for (char c : A[i].toCharArray()) {
+                temp[c - 'a']++;
 
             }
-            for(int j=0;j<26;j++){
-                res[j] = Math.min(res[j],temp[j]);
+            for (int j = 0; j < 26; j++) {
+                res[j] = Math.min(res[j], temp[j]);
             }
         }
 
-        for(int i=0;i<res.length;i++){
+        for (int i = 0; i < res.length; i++) {
 
-            if(res[i]>0){
-                for(int j=0;j<res[i];j++){
+            if (res[i] > 0) {
+                for (int j = 0; j < res[i]; j++) {
                     list.add(((char) ('a' + i) + ""));
                 }
             }

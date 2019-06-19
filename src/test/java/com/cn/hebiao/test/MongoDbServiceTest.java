@@ -1,4 +1,3 @@
-
 package com.cn.hebiao.test;
 
 import com.cn.fileServer.FileDO;
@@ -29,96 +28,96 @@ import org.springframework.data.mongodb.MongoDbFactory;
  */
 public class MongoDbServiceTest extends BaseTest {
 
-  @Autowired
-  private IFileService fileService;
-  @Resource
-  private MongoDbFactory mongoDbFactory;
+    @Autowired
+    private IFileService fileService;
+    @Resource
+    private MongoDbFactory mongoDbFactory;
 
-  @Test
-  public void testSave() {
+    @Test
+    public void testSave() {
 
-    String filePath = "F:\\接口文档Finance.pdf";
-    File f = new File(filePath);
-    FileDO fileDO = new FileDO();
-    fileDO.setId(String.valueOf(UUID.randomUUID()));
-    fileDO.setFileName(filePath);
-    fileDO.setUploadUser(1L);
-    fileDO.setFileSize(f.length() + "");
-    fileDO.setFileType(filePath.substring(filePath.lastIndexOf(".")));
-    try {
-      InputStream inputStream = new FileInputStream(new File(filePath));
-      byte[] bytes = new byte[inputStream.available()];
-      int len = 0;
-      int temp;
-      while ((temp = inputStream.read(bytes)) != -1) {
-        bytes[len] = (byte) temp;
-        len++;
-      }
-      fileDO.setFileContent(bytes);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
+        String filePath = "F:\\接口文档Finance.pdf";
+        File f = new File(filePath);
+        FileDO fileDO = new FileDO();
+        fileDO.setId(String.valueOf(UUID.randomUUID()));
+        fileDO.setFileName(filePath);
+        fileDO.setUploadUser(1L);
+        fileDO.setFileSize(f.length() + "");
+        fileDO.setFileType(filePath.substring(filePath.lastIndexOf(".")));
+        try {
+            InputStream inputStream = new FileInputStream(new File(filePath));
+            byte[] bytes = new byte[inputStream.available()];
+            int len = 0;
+            int temp;
+            while ((temp = inputStream.read(bytes)) != -1) {
+                bytes[len] = (byte) temp;
+                len++;
+            }
+            fileDO.setFileContent(bytes);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        fileDO = fileService.saveFile(fileDO);
+
+        System.out.println(fileDO.toString());
+
     }
 
-    fileDO = fileService.saveFile(fileDO);
+    @Test
+    public void testGet() {
+        String id = "09c3ed24-e830-4cf2-ab3b-76e9b6849c69";
+        FileDO file = fileService.getFileById(id);
 
-    System.out.println(fileDO.toString());
+        String filePath = "D:\\1.pdf";
 
-  }
+        File fi = new File(filePath);
+        try {
 
-  @Test
-  public void testGet() {
-    String id = "09c3ed24-e830-4cf2-ab3b-76e9b6849c69";
-    FileDO file = fileService.getFileById(id);
+            FileOutputStream outStream = new FileOutputStream(fi);
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outStream);
 
-    String filePath = "D:\\1.pdf";
+            //FileWriter fileWriter = new FileWriter(filePath);
+            //BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-    File fi = new File(filePath);
-    try {
+            byte[] bytes = file.getFileContent();
+            InputStream is = new ByteArrayInputStream(bytes);
 
-      FileOutputStream outStream = new FileOutputStream(fi);
-      BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outStream);
+            byte[] buff = new byte[1024];
+            int len;
+            while ((len = is.read(buff)) != -1) {
+                bufferedOutputStream.write(buff, 0, len);
+                bufferedOutputStream.flush();//使用缓冲的时候一定要flush
+            }
+            bufferedOutputStream.close();
+            outStream.close();
 
-      //FileWriter fileWriter = new FileWriter(filePath);
-      //BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-      byte[] bytes = file.getFileContent();
-      InputStream is = new ByteArrayInputStream(bytes);
 
-      byte[] buff = new byte[1024];
-      int len;
-      while ((len = is.read(buff)) != -1) {
-        bufferedOutputStream.write(buff, 0, len);
-        bufferedOutputStream.flush();//使用缓冲的时候一定要flush
-      }
-      bufferedOutputStream.close();
-      outStream.close();
-
-    } catch (IOException e) {
-      e.printStackTrace();
     }
 
+    @Test
+    public void gridFSave() throws FileNotFoundException {
+        String filePath = "F:\\接口文档-Finance.pdf";
+        File file = new File(filePath);
+        InputStream inputStream = new FileInputStream(file);
+        DB db = mongoDbFactory.getLegacyDb();
+        GridFS gridFS = new GridFS(db);
+        String id = UUID.randomUUID().toString();
+        System.out.println(id);
+        DBObject query = new BasicDBObject("_id", id);
+        GridFSDBFile gridFSDBFile = gridFS.findOne(query);
+        if (gridFSDBFile == null) {
+            GridFSInputFile gridFSInputFile = gridFS.createFile(inputStream);
+            gridFSInputFile.setId(id);
+            gridFSInputFile.setFilename(file.getName());
+            gridFSInputFile.save();
+        }
 
-  }
-
-  @Test
-  public void gridFSave() throws FileNotFoundException {
-    String filePath = "F:\\接口文档-Finance.pdf";
-    File file = new File(filePath);
-    InputStream inputStream = new FileInputStream(file);
-    DB db = mongoDbFactory.getLegacyDb();
-    GridFS gridFS = new GridFS(db);
-    String id = UUID.randomUUID().toString();
-    System.out.println(id);
-    DBObject query = new BasicDBObject("_id", id);
-    GridFSDBFile gridFSDBFile = gridFS.findOne(query);
-    if (gridFSDBFile == null) {
-      GridFSInputFile gridFSInputFile = gridFS.createFile(inputStream);
-      gridFSInputFile.setId(id);
-      gridFSInputFile.setFilename(file.getName());
-      gridFSInputFile.save();
     }
-
-  }
 }

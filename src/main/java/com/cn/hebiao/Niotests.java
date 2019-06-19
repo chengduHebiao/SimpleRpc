@@ -1,4 +1,3 @@
-
 package com.cn.hebiao;
 
 import java.io.FileInputStream;
@@ -13,31 +12,31 @@ import java.nio.channels.FileChannel;
  */
 public class Niotests {
 
-  public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-    FileInputStream fileInputStream = new FileInputStream("F:\\demo.html");
+        FileInputStream fileInputStream = new FileInputStream("F:\\demo.html");
 
-    FileOutputStream fileOutputStream = new FileOutputStream("F:\\file.txt");
+        FileOutputStream fileOutputStream = new FileOutputStream("F:\\file.txt");
 
-    FileChannel inChannel = fileInputStream.getChannel();
-    FileChannel outChannel = fileOutputStream.getChannel();
+        FileChannel inChannel = fileInputStream.getChannel();
+        FileChannel outChannel = fileOutputStream.getChannel();
 
-    ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
 
-    while (true) {
-      byteBuffer.clear();
-      int read = inChannel.read(byteBuffer);
-      System.out.println(read);
-      //读完了
-      if (read == -1) {
-        break;
-      }
-      byteBuffer.flip();
-      outChannel.write(byteBuffer);
+        while (true) {
+            byteBuffer.clear();
+            int read = inChannel.read(byteBuffer);
+            System.out.println(read);
+            //读完了
+            if (read == -1) {
+                break;
+            }
+            byteBuffer.flip();
+            outChannel.write(byteBuffer);
+        }
+
+        fileInputStream.close();
+        fileOutputStream.close();
     }
-
-    fileInputStream.close();
-    fileOutputStream.close();
-  }
 
 }

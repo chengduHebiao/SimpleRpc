@@ -18,7 +18,6 @@ public class InitListener implements ApplicationListener<ContextRefreshedEvent> 
 
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-
         if (event.getApplicationContext().getParent() != null) {
 
             return;

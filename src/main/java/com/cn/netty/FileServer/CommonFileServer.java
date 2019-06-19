@@ -4,8 +4,6 @@
 
 package com.cn.netty.FileServer;
 
-import io.netty.bootstrap.Bootstrap;
-
 /**
  * 简易文件服务器
  *
@@ -15,8 +13,7 @@ import io.netty.bootstrap.Bootstrap;
 public class CommonFileServer {
 
 
-    public static void main(String[] args){
-
+    public static void main(String[] args) {
 
     }
 }

@@ -10,6 +10,22 @@ package com.cn.hebiao;
  */
 public class ThreadIntrrupt {
 
+    public static void main(String[] args) {
+
+        intrruptTest test1 = new intrruptTest();
+
+        test1.start();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        test1.interrupt();
+
+    }
+
     public static class intrruptTest extends Thread {
 
         @Override
@@ -30,22 +46,5 @@ public class ThreadIntrrupt {
 
 
         }
-    }
-
-
-    public static void main(String[] args) {
-
-        intrruptTest test1 = new intrruptTest();
-
-        test1.start();
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        test1.interrupt();
-
     }
 }

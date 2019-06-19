@@ -5,7 +5,6 @@
 package com.cn.netty.HttpServer;
 
 import com.cn.netty.simpleChat.SimpleChatServer;
-import com.cn.netty.simpleChat.SimpleChatServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -16,17 +15,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- *
  * @author hebiao
- * @version $Id:HttpServer.java, v0.1 2019/1/29 16:32 hebiao Exp $$ 
+ * @version $Id:HttpServer.java, v0.1 2019/1/29 16:32 hebiao Exp $$
  */
 public class HttpServer {
+
     private Logger logger = LoggerFactory.getLogger(SimpleChatServer.class);
     private int port;
 
     public HttpServer(int port) {
         this.port = port;
+    }
+
+    public static void main(String[] args) {
+        int port;
+        if (args.length > 0) {
+            port = Integer.parseInt(args[0]);
+        } else {
+            port = 8090;
+        }
+        HttpServer server = new HttpServer(port);
+        server.run();
     }
 
     public void run() {
@@ -40,7 +49,7 @@ public class HttpServer {
                     .childHandler(new HttpServerInitializer())  //(4)
                     .option(ChannelOption.SO_BACKLOG, 128)          // (5)
                     .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
-            logger.warn("httpServer启动，端口{}",port);
+            logger.warn("httpServer启动，端口{}", port);
             ChannelFuture f = b.bind(port).sync();
             f.channel().closeFuture().sync();
         } catch (InterruptedException e) {
@@ -49,17 +58,6 @@ public class HttpServer {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
-    }
-
-    public static void main(String[] args) {
-        int port;
-        if (args.length > 0) {
-            port = Integer.parseInt(args[0]);
-        } else {
-            port = 8090;
-        }
-        HttpServer server = new HttpServer(port);
-        server.run();
     }
 
 }
