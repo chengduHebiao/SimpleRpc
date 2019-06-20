@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author hebiao
@@ -56,7 +57,8 @@ public class IsPalindrome {
         System.out.println(wordBreak("catsandog", list));*/
 
         //System.out.println(lengthOfLongestSubString("abc"));
-        System.out.println(convert("LEETCODEISHIRING", 3));
+        //System.out.println(convert("LEETCODEISHIRING", 3));
+        System.out.println(myAtoi("42"));
     }
 
     public static int countSubstrings(String s) {
@@ -201,5 +203,54 @@ public class IsPalindrome {
             ans += row;
         }
         return ans;
+    }
+
+    private static int myAtoi(String str) {
+
+        if (str == null || str.trim().equals("") || "-".equals(str) || "+".equals(str) ) {
+            return 0;
+        }
+        String string = str.trim();
+        Pattern pattern = Pattern.compile("^-?[0-9]d*$");
+        Character firstChar = string.toCharArray()[0];
+        String s = String.valueOf(firstChar);
+        if (!s.equals("-") &&!s.equals("+") && !pattern.matcher(s).matches()) {
+            return 0;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        int index = 0;
+        for (int i = index; i < string.length(); i++) {
+            String single = String.valueOf(string.charAt(i));
+            if(i==0){
+                if(single.equals("-")){
+                    stringBuilder.append(string.charAt(i));
+                }
+                else if(single.equals("+")) {
+
+                }
+                else {
+                    stringBuilder.append(string.charAt(i));
+                }
+            }
+            else{
+                if (pattern.matcher(single).matches()) {
+                    stringBuilder.append(string.charAt(i));
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        Integer integer = 0;
+        Pattern pattern1 =  Pattern.compile("^-?[0-9]+(\\.[0-9]+)?");
+        if(!pattern1.matcher(stringBuilder.toString()).matches()){
+            return 0;
+        }
+        try {
+            integer = Integer.valueOf(stringBuilder.toString());
+        } catch (Exception e) {
+            return string.charAt(0)=='-'?Integer.MIN_VALUE:Integer.MAX_VALUE;
+        }
+        return integer;
     }
 }
