@@ -1,7 +1,9 @@
 package com.cn.letcode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hebiao
@@ -48,5 +50,75 @@ public class QueryString {
         }
 
         return list;
+    }
+
+    public static int roamanTOint(String s) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("I", 1);
+        map.put("IV", 4);
+        map.put("V", 5);
+        map.put("IX", 9);
+        map.put("X", 10);
+        map.put("XL", 40);
+        map.put("L", 50);
+        map.put("XC", 90);
+        map.put("C", 100);
+        map.put("CD", 400);
+        map.put("D", 500);
+        map.put("CM", 900);
+        map.put("M", 1000);
+
+        Integer result = 0;
+        for (int i = 0; i < s.length(); ) {
+            if (i + 1 < s.length() && map.containsKey(s.substring(i, i + 2))) {
+                result += map.get(s.substring(i, i + 2));
+                i = i + 2;
+            } else {
+                result += map.get(s.substring(i, i + 1));
+                i++;
+            }
+        }
+        return result;
+
+    }
+
+    /**
+     * 查找最长公共前缀
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0 || strs[0] == null || strs[0].isEmpty()) {
+            return "";
+        }
+        if(strs.length ==1){
+            return strs[0];
+        }
+        int minLength =strs[0].length();
+        for(int temp=0;temp<strs.length;temp++){
+            minLength = Math.min(minLength,strs[temp].length());
+        }
+        String result = "";
+        for (int j = 0; j < minLength; j++) {
+            String subString = strs[0].substring(0, j+1);
+            boolean ok =true;
+            for (int k = 1; k < strs.length; k++) {
+                if (!strs[k].substring(0,j+1).equals(subString)) {
+                   ok = false;
+                }
+            }
+            if(ok){
+                result = subString;
+            }
+
+        }
+        return result;
+
+    }
+
+    public static void main(String[] args) {
+       // roamanTOint("III");
+        String[] strings = new String[]{"c","acc","ccc"};
+        System.out.println(longestCommonPrefix(strings));
     }
 }
