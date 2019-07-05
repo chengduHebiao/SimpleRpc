@@ -134,8 +134,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
-
     <dependency>
       <groupId>org.apache.zookeeper</groupId>
       <artifactId>zookeeper</artifactId>
@@ -150,6 +148,12 @@
       <groupId>org.apache.curator</groupId>
       <artifactId>curator-framework</artifactId>
       <version>2.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.woo</groupId>
+      <artifactId>htmltopdf</artifactId>
+      <version>1.0.8</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>

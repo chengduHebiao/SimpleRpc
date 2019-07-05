@@ -116,11 +116,10 @@ public class QueryString {
 
     /**
      * 电话号码的字母组合
-     *
      */
     public static List<String> letterCombinations(String digits) {
         List<String> result = new ArrayList<>();
-        if(null == digits || ""==digits){
+        if (null == digits || "" == digits) {
             return result;
         }
         Map<String, String> nums = new HashMap<String, String>() {
@@ -162,10 +161,126 @@ public class QueryString {
         }
     }
 
+    public static boolean isValid(String s) {
+        if (s == null || "".equals(s)) {
+            return true;
+        }
+        Map<String, String> map = new HashMap<>();
+        map.put("{", "}");
+        map.put("[", "]");
+        map.put("(", ")");
+        int i = 0;
+        int j = s.length();
+        int mid = j / 2;
+
+        while (i < mid) {
+            if (!map.get(String.valueOf(s.charAt(i))).equals(String.valueOf(s.charAt(j - i - 1)))) {
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+
+    //** 回溯法 利用左括号和右括号的个数来判断
+    public static List<String> generateParenthesis(int n) {
+        ArrayList<String> res = new ArrayList<String>();
+        backtrack(res, "", n, n);
+        return res;
+
+    }
+
+    public static void backtrack(ArrayList<String> res, String s, int left_p, int right_p) {
+        if (left_p == 0 && right_p == 0) {
+            res.add(s);
+            return;
+        }
+        if (left_p < 0 || right_p < 0 || left_p > right_p) {
+            return;
+        }
+        backtrack(res, s + "(", left_p - 1, right_p);
+        backtrack(res, s + ")", left_p, right_p - 1);
+    }
+
+    public static List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> data = new ArrayList<>();
+
+        if (s.isEmpty()) {
+            return data;
+        }
+        int wordsLength = s.length();
+        int singleWordLength = words[0].length();
+        int totalLength = words.length * singleWordLength;
+        if (wordsLength < totalLength) {
+            return data;
+        }
+        Map<String, Integer> integerMap = new HashMap<>();
+
+        for (int i = 0; i < words.length; i++) {
+            int count = integerMap.get(words[i]) == null ? 0 : integerMap.get(words[i]);
+            integerMap.put(words[i], count + 1);
+        }
+
+        for (int baseIndex = 0; baseIndex <= wordsLength - totalLength; ++baseIndex) {
+            Map<String, Integer> tempWord = new HashMap<>();
+
+            integerMap.forEach((k,v)->{
+                tempWord.put(k,v);
+            });
+
+            int offset = 0;
+            while (offset < totalLength) {
+                String temp = s.substring(baseIndex+offset,baseIndex+offset+singleWordLength);
+
+                if (tempWord.get(temp) == null || tempWord.get(temp) == 0) {
+                    break;
+                } else if (tempWord.get(temp) == 1) {
+                    tempWord.remove(temp);
+                } else {
+                    tempWord.put(temp, integerMap.get(temp) - 1);
+                }
+
+                offset += singleWordLength;
+            }
+
+            if (tempWord.isEmpty()) {
+                data.add(baseIndex);
+            }
+
+        }
+        return data;
+    }
+
+    /**
+     * 二维数组中找指定的数是否存在，数组的每一行从左到右大小递增，每一列从上到下大小递增
+     * @param arry
+     * @param n
+     * @return
+     */
+    public static boolean soulution(int[][] arry,int n){
+
+        int row = arry.length-1;
+        int col = arry[0].length -1;
+        int i=0;
+        int j = col;
+
+        while(i<=row && j>=0){
+            if(arry[i][j] <n){
+                i++;
+            }
+            else if(arry[i][j] > n){
+                j--;
+            }
+            else {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         // roamanTOint("III");
         String[] strings = new String[]{"c", "acc", "ccc"};
-        System.out.println(letterCombinations("237"));
+        System.out.println(findSubstring("barfoothefoobarman", new String[]{"foo", "bar"}));
     }
 }
