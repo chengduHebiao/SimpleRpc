@@ -1,9 +1,11 @@
 package com.cn.letcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * @author hebiao
@@ -224,13 +226,13 @@ public class QueryString {
         for (int baseIndex = 0; baseIndex <= wordsLength - totalLength; ++baseIndex) {
             Map<String, Integer> tempWord = new HashMap<>();
 
-            integerMap.forEach((k,v)->{
-                tempWord.put(k,v);
+            integerMap.forEach((k, v) -> {
+                tempWord.put(k, v);
             });
 
             int offset = 0;
             while (offset < totalLength) {
-                String temp = s.substring(baseIndex+offset,baseIndex+offset+singleWordLength);
+                String temp = s.substring(baseIndex + offset, baseIndex + offset + singleWordLength);
 
                 if (tempWord.get(temp) == null || tempWord.get(temp) == 0) {
                     break;
@@ -253,34 +255,80 @@ public class QueryString {
 
     /**
      * 二维数组中找指定的数是否存在，数组的每一行从左到右大小递增，每一列从上到下大小递增
-     * @param arry
-     * @param n
-     * @return
      */
-    public static boolean soulution(int[][] arry,int n){
+    public static boolean soulution(int[][] arry, int n) {
 
-        int row = arry.length-1;
-        int col = arry[0].length -1;
-        int i=0;
+        int row = arry.length - 1;
+        int col = arry[0].length - 1;
+        int i = 0;
         int j = col;
 
-        while(i<=row && j>=0){
-            if(arry[i][j] <n){
+        while (i <= row && j >= 0) {
+            if (arry[i][j] < n) {
                 i++;
-            }
-            else if(arry[i][j] > n){
+            } else if (arry[i][j] > n) {
                 j--;
-            }
-            else {
+            } else {
                 return true;
             }
         }
         return false;
     }
 
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs.length == 0) {
+            return new ArrayList<>();
+        }
+
+        Map<String, Integer> map = new HashMap<>();
+        List<List<String>> data = new ArrayList<>();
+
+        for (int i = 0; i < strs.length; i++) {
+            String sortString = sort(strs[i]);
+
+            Integer index = map.get(sortString);
+            if (index == null) {
+                List<String> strings = new ArrayList<>();
+                strings.add(strs[i]);
+                data.add(strings);
+                map.put(sortString, data.size()-1);
+            } else {
+                data.get(index).add(strs[i]);
+            }
+        }
+        return data;
+    }
+
+    private String sort(String str) {
+
+        char[] chars = str.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
+    }
+
+    public boolean isYiWei(String current, String temp) {
+
+        Stack stack = new Stack();
+        for (Character c : current.toCharArray()) {
+            stack.push(c);
+        }
+
+        for (Character character : temp.toCharArray()) {
+            if (stack.search(character) > 0) {
+                stack.remove(character);
+            }
+        }
+        if (stack.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         // roamanTOint("III");
-        String[] strings = new String[]{"c", "acc", "ccc"};
-        System.out.println(findSubstring("barfoothefoobarman", new String[]{"foo", "bar"}));
+        QueryString queryString = new QueryString();
+        String[] strings = new String[]{
+                "eat","tea","tan","ate","nat","bat"};
+        System.out.println(queryString.groupAnagrams(strings));
     }
 }
