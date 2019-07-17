@@ -49,8 +49,6 @@ public class FileController {
     @GetMapping(value = "/{id}")
     public void getImageById(@PathVariable String id, HttpServletResponse response) throws IOException {
         // 查询单个文件
-    /*Query query = Query.query(Criteria.where("id").is(id));
-    GridFSFile gfsfile = gridFsTemplate.findOne(query);*/
 
         DB db = mongoDbFactory.getLegacyDb();
         GridFS gridFS = new GridFS(db);
@@ -60,16 +58,12 @@ public class FileController {
         if (gfsfile == null) {
             return;
         }
-        //GridFsResource gridFsResource = convertGridFSFile2Resource(gfsfile);
         String fileName = gfsfile.getFilename().replace(",", "");
         fileName = java.net.URLEncoder.encode(fileName, "UTF-8");
         // 通知浏览器进行文件下载
         response.setContentType(gfsfile.getContentType());
         response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
-        /*  IOUtils.copy(gridFsResource.getInputStream(),response.getOutputStream());*/
         gfsfile.writeTo(response.getOutputStream());
-
-
     }
 
 

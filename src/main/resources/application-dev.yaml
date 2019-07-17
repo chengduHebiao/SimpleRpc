@@ -9,9 +9,9 @@ spring:
   #数据库的配置
   datasource:
     name: dev
-    url: jdbc:mysql://localhost:3306/zzzz?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/rank?useUnicode=true&characterEncoding=utf-8
     username: root
-    password: xxxx
+    password: 123456
     # 使用druid数据源
     #type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
