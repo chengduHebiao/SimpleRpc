@@ -80,10 +80,29 @@ public class ReverseString {
         return 0;
     }
 
+    public static boolean divisorGame(int N) {
+        boolean win = false;
+        for(int x=1;x<N;x++){
+            int temp=N;
+            int odd=0;
+            while(x<temp){
+                odd++;
+                if(temp %x == 0){
+                    temp-=x;
+                }
+            }
+            if(odd %2 == 0){
+                return false;
+            }
+            else return true;
+        }
+        return win;
+    }
+
     public static void main(String[] args) {
         String originString = "bcbassdolk";
         int[] array = new int[]{5,1,5,2,5,3,5,4};
 
-        System.out.println(repeatedNTimes(array));
+        System.out.println(divisorGame(3));
     }
 }
