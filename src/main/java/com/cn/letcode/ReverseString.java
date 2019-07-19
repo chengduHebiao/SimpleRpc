@@ -51,6 +51,24 @@ public class ReverseString {
         return maxLengthStr;
 
     }
+    public static  int repeatedNTimes(int[] A) {
+
+        int length = A.length;
+        int n = length/2;
+
+        int[] nums = new int[10000];
+        for(int i=0;i<length;i++){
+            int count = nums[A[i]-0];
+            nums[A[i]-0]=count+1;
+        }
+        for(int j =0;j<nums.length;j++){
+            if(nums[j]==n){
+                return j;
+            }
+        }
+        return 0;
+
+    }
 
     private static Integer getLength(String subString) {
 
@@ -64,7 +82,8 @@ public class ReverseString {
 
     public static void main(String[] args) {
         String originString = "bcbassdolk";
+        int[] array = new int[]{5,1,5,2,5,3,5,4};
 
-        System.out.println("最长回文子串为：" + new StringBuffer(originString).reverse().toString());
+        System.out.println(repeatedNTimes(array));
     }
 }
