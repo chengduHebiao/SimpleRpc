@@ -1,8 +1,10 @@
 package com.cn.letcode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -146,11 +148,10 @@ public class Tree {
             int length = queue.size();
             for (int i = 0; i < length; i++) {
                 TreeNode node = queue.remove();
-                if(level %2 ==0){
+                if (level % 2 == 0) {
                     list.get(level).add(node.val);
-                }
-                else {
-                    list.get(level).add(0,node.val);
+                } else {
+                    list.get(level).add(0, node.val);
                 }
 
                 if (node.right != null) {
@@ -190,6 +191,38 @@ public class Tree {
             level++;
         }
         return levels;
+    }
+
+    int[] preorder;
+    int[] inorder;
+    int preindex;
+    Map<Integer, Integer> map = new HashMap<>();
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+
+        this.preorder = preorder;
+        this.inorder = inorder;
+
+        int index = 0;
+        for (Integer val : inorder) {
+            map.put(val, index++);
+        }
+        return buildTree(0, inorder.length);
+
+    }
+
+    public TreeNode buildTree(int left, int right) {
+        if (left == right) {
+            return null;
+        }
+        Integer val = preorder[preindex];
+        TreeNode node = new TreeNode(val);
+        Integer index = map.get(val);
+        preindex++;
+        node.left = buildTree(left, index);
+        node.right = buildTree(index + 1, right);
+
+        return node;
     }
 
     public static void main(String[] args) {
