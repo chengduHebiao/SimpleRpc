@@ -99,7 +99,7 @@ public class NioServer {
         } else if (key.isWritable()) {
             sendBuffer.clear();
             client = (SocketChannel) key.channel();
-            sendTex = "send a message to client" + flag++;
+            sendTex = "send a Message to client" + flag++;
             sendBuffer.put(sendTex.getBytes());
             sendBuffer.flip();
             client.write(sendBuffer);

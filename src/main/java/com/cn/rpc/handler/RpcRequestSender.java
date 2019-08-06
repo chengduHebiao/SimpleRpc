@@ -29,12 +29,12 @@ public class RpcRequestSender extends SimpleChannelInboundHandler<RpcResponse> {
 
     private static final Logger log = LoggerFactory.getLogger(RpcRequestSender.class);
 
-    private BlockingQueue<RpcResponse> responseHodler = new LinkedBlockingQueue<RpcResponse>(1);
+    private BlockingQueue<RpcResponse> responseHolder = new LinkedBlockingQueue<RpcResponse>(1);
 
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, RpcResponse response) throws Exception {
-        responseHodler.put(response);
+        responseHolder.put(response);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class RpcRequestSender extends SimpleChannelInboundHandler<RpcResponse> {
                     .handler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
+                        protected void initChannel(SocketChannel ch) {
                             ch.pipeline().addLast(new RpcEncode(RpcRequest.class))
                                     .addLast(new RpcDecode(RpcResponse.class))
                                     .addLast(RpcRequestSender.this);
@@ -69,7 +69,7 @@ public class RpcRequestSender extends SimpleChannelInboundHandler<RpcResponse> {
              *
              * 使用闭锁实现等待
              */
-            RpcResponse response = responseHodler.take();
+            RpcResponse response = responseHolder.take();
             log.warn("send request is " + request);
             log.warn("receive response is " + response);
             channel.closeFuture();

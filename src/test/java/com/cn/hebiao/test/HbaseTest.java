@@ -45,7 +45,7 @@ public class HbaseTest {
 
         HColumnDescriptor h1 = new HColumnDescriptor("order");
 
-        HColumnDescriptor h2 = new HColumnDescriptor("message");
+        HColumnDescriptor h2 = new HColumnDescriptor("Message");
 
         hTableDescriptor.addFamily(h1);
 
@@ -81,8 +81,8 @@ public class HbaseTest {
                 = new Put(Bytes.toBytes("row+1"));
 
         put.addColumn(Bytes.toBytes("order"), Bytes.toBytes("date"), Bytes.toBytes("2019"));
-        put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("error"), Bytes.toBytes("dontright"));
-        put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("config"), Bytes.toBytes("uiii"));
+        put.addColumn(Bytes.toBytes("Message"), Bytes.toBytes("error"), Bytes.toBytes("dontright"));
+        put.addColumn(Bytes.toBytes("Message"), Bytes.toBytes("config"), Bytes.toBytes("uiii"));
 
         table.put(put);
 
@@ -127,8 +127,8 @@ public class HbaseTest {
         sb.append(string).append("[")
                 .append("row+1:order=" + Bytes.toString(result.getValue(Bytes.toBytes("order"), Bytes.toBytes("date"))
                 ) + "\t")
-                .append("row+1:message=" + Bytes
-                        .toString(result.getValue(Bytes.toBytes("message"), Bytes.toBytes("error"))));
+                .append("row+1:Message=" + Bytes
+                        .toString(result.getValue(Bytes.toBytes("Message"), Bytes.toBytes("error"))));
 
         System.out.println(sb.toString());
 
