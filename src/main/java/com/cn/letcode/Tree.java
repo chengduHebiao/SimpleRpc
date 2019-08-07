@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * @author hebiao
@@ -193,39 +194,82 @@ public class Tree {
         return levels;
     }
 
-    int[] preorder;
+
+
+    HashMap<Integer,Integer> idx_map = new HashMap<Integer,Integer>();
+    int[] postorder;
     int[] inorder;
-    int preindex;
-    Map<Integer, Integer> map = new HashMap<>();
-
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-
-        this.preorder = preorder;
-        this.inorder = inorder;
-
-        int index = 0;
-        for (Integer val : inorder) {
-            map.put(val, index++);
-        }
-        return buildTree(0, inorder.length);
-
-    }
-
-    public TreeNode buildTree(int left, int right) {
-        if (left == right) {
+    int pre_idx;
+    public TreeNode helper(int in_left, int in_right) {
+        if (in_left == in_right)
             return null;
-        }
-        Integer val = preorder[preindex];
-        TreeNode node = new TreeNode(val);
-        Integer index = map.get(val);
-        preindex++;
-        node.left = buildTree(left, index);
-        node.right = buildTree(index + 1, right);
-
-        return node;
+        int root_val = postorder[pre_idx-1]; // 后序遍历从后往前
+        pre_idx --;
+        int index = idx_map.get(root_val);
+        TreeNode root = new TreeNode(root_val); //新建一个根节点
+        root.right = helper(index + 1, in_right); // 从右往左
+        root.left = helper(in_left, index);
+        return root;
     }
+
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        this.inorder = inorder;
+        this.postorder = postorder;
+        int idx = 0;
+        for(int i:inorder) {
+            idx_map.put(i,idx++);
+        }
+        pre_idx = postorder.length;
+        return helper(0,inorder.length);
+    }
+
+
+    private List<List<Integer>> allData = new ArrayList<>();
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> levels = new ArrayList<List<Integer>>();
+        if (root == null) {
+            return levels;
+        }
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        int level = 0;
+        while (!queue.isEmpty()) {
+            levels.add(new ArrayList<Integer>());
+            int level_length = queue.size();
+            for (int i = 0; i < level_length; ++i) {
+                TreeNode node = queue.remove();
+                levels.get(level).add(node.val);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            level++;
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        for(int i=levels.size()-1;i>=0;i--){
+            result.add(levels.get(i));
+        }
+        return result;
+    }
+
+
+
+
+
+
 
     public static void main(String[] args) {
+        LinkedList linkedList= new LinkedList<Integer>();
+        linkedList.addFirst(21);
+        linkedList.addFirst(20);
+        linkedList.addFirst(19);
+        System.out.println(linkedList);
+
+
+
         System.out.println(2 % 2);
     }
 
