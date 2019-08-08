@@ -1,1 +1,1 @@
-# Its a Rpc FrameWork which based on Netty
+# simple rpc based on netty
