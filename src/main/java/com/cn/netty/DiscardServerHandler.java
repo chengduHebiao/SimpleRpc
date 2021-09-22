@@ -15,9 +15,10 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         try {
 
-            ByteBuf byteBuf = (ByteBuf) msg;
-            System.out.print(byteBuf.toString(CharsetUtil.UTF_8));
-            ctx.writeAndFlush(msg);
+            
+            System.out.print(msg.toString());
+           // ctx.writeAndFlush(msg);
+            ctx.fireChannelRead(msg);
         } finally {
             // ReferenceCountUtil.release(msg);
         }

@@ -8,6 +8,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author hebiao
@@ -48,7 +51,7 @@ public class DiscardServer {
              */
             b = b.channel(NioServerSocketChannel.class);
             /***
-             * 这里的事件处理类经常会被用来处理一个最近的已经接收的Channel。 ChannelInitializer是一个特殊的处理类，
+             *  ChannelInitializer是一个特殊的处理类，
              * 他的目的是帮助使用者配置一个新的Channel。
              * 也许你想通过增加一些处理类比如NettyServerHandler来配置一个新的Channel
              * 或者其对应的ChannelPipeline来实现你的网络程序。 当你的程序变的复杂时，可能你会增加更多的处理类到pipline上，
@@ -57,7 +60,9 @@ public class DiscardServer {
             b = b.childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addLast(new StringDecoder(StandardCharsets.UTF_8));
                     ch.pipeline().addLast(new DiscardServerHandler());// demo1.discard
+                    
                     // ch.pipeline().addLast(new
                     // ResponseServerHandler());//demo2.echo
                     // ch.pipeline().addLast(new
